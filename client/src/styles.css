@@ -1,0 +1,122 @@
+:root {
+  --main-bg: #000;
+  --main-middle: #555;
+  --main-font: #fff;
+  --main-accent: #00aaff;
+}
+* {
+  padding: 0px;
+  margin: 0px;
+  border-radius: 16px;
+  font-size: 16px;
+  font-family: Arial;
+  border-color: var(--main-middle);
+  border-width: 1px;
+  background-color: var(--main-bg);
+  color: var(--main-font);
+  outline: none;
+}
+#app-container {
+  display: flex;
+  max-width: 1000px;
+  margin: 0 auto;
+}
+#sidebar {
+  padding: 10px;
+  margin: 5px;
+  border-style: solid;
+  height: max-content;
+}
+.logo {
+  width: 80px;
+  height: 50px;
+  margin-bottom: 20px;
+  border-radius: 0;
+}
+#sidebar ul li {
+  padding: 10px 0;
+  cursor: pointer;
+  font-size: 18px;
+  list-style-type: none;
+}
+#post-box, #search-box {
+  border-style: solid;
+  margin: 5px;
+  padding: 10px;
+}
+#search-box {
+  margin-bottom: 20px;
+}
+#post-box textarea, #search-box textarea {
+  width: 100%;
+  border-radius: 0;
+  border: none;
+  resize: none;
+  font-size: 16px;
+}
+#search-box textarea {
+  overflow: hidden;
+  white-space: nowrap;
+}
+#post-box button {
+  margin-top: 10px;
+  padding: 5px 10px;
+  border-radius: 20px;
+  border-style: solid;
+  border-color: var(--main-accent);
+  cursor: pointer;
+}
+#notes-box {
+  padding: 10px;
+  margin: 5px;
+  margin-top: 20px;
+  border-style: solid;
+}
+.note {
+  padding: 10px;
+  margin-bottom: 10px;
+  border-style: solid;
+}
+.note-header {
+  display: flex;
+  align-items: center;
+  margin-bottom: 8px;
+}
+.note-name {
+  font-weight: bold;
+  margin-right: 10px;
+}
+.note-handle {
+  color: var(--main-middle);
+}
+#details-box {
+  width: 30%;
+  padding: 10px;
+  margin: 5px;
+  border-style: solid;
+  height: max-content;
+}
+#details-box h2 {
+  font-size: 18px;
+  margin-bottom: 10px;
+}
+#details-box div{
+  padding: 10px;
+  border-style: solid;
+  margin-bottom: 20px;
+}
+#calendar-details-box:not(#it-does-not-even-exist) {
+  margin-bottom: 0;
+}
+#details-box h3 {
+  margin-bottom: 5px;
+}
+#details-box ul {
+  list-style: none;
+}
+#details-box li {
+  margin: 5px;
+}
+#details-topic {
+  color: var(--main-middle);
+}
