@@ -56,7 +56,8 @@ function Note({ note }) {
     <div className="note">
       <div className="note-header">
         <span className="note-name">{note.name}</span>
-        <span className="note-handle">{note.handle}</span>
+        <span className="note-metadata">{note.username}</span>
+        <span className="note-metadata">{note.creationTime}</span>
       </div>
       <div className="note-content">{note.content}</div>
     </div>
@@ -65,9 +66,9 @@ function Note({ note }) {
 
 function Notes() {
   const dummyNotes = [
-    { id: 1, name: "User 0", handle: "@user0", content: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua." },
-    { id: 2, name: "User 0", handle: "@user0", content: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua." },
-    { id: 3, name: "User 0", handle: "@user0", content: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua." },
+    { id: 1, name: "User 0", username: "@user0", creationTime: "2024-01-01 14:15", content: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua." },
+    { id: 2, name: "User 0", username: "@user0", creationTime: "2024-01-01 14:15", content: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua." },
+    { id: 3, name: "User 0", username: "@user0", creationTime: "2024-01-01 14:15", content: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua." },
   ];
   
   return (
