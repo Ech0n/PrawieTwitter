@@ -1,10 +1,12 @@
 const sequelize = require('../database/config');
 
 const User = require('./user');
+const Post = require('./post');
 
 const db = {
     sequelize,
-    User
+    User,
+    Post
 }
 
 // Jakieś domyślne wartości w bazie danych
