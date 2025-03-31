@@ -7,7 +7,7 @@ const passport = require('passport')
 
 const usersRouter = require('./routes/users');
 const registerRouter = require('./routes/register');
-const loginRouter = require('./routes/login');
+const authRouter = require('./routes/auth');
 const postsRouter = require('./routes/posts');
 
 const app = express();
@@ -43,7 +43,7 @@ app.use(passport.session({}));
 
 app.use('/users', usersRouter);
 app.use('/register', registerRouter);
-app.use('/login', loginRouter);
+app.use('/auth', authRouter);
 app.use('/posts', postsRouter);
 
 module.exports = app;
