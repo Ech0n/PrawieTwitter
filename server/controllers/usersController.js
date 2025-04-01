@@ -16,7 +16,7 @@ const getUser = async (req, res, sortOption) => {
 
         const existingUser = await db.User.findOne({
             where: { id: userId },
-            attributes: { exclude: ['password']}
+            attributes: { exclude: ['password_hash']}
         });
 
         if(!existingUser){
@@ -54,11 +54,11 @@ const deleteUser = async (req, res) => {
 const updateUser = async (req, res) => {
     try{
         const userId = req.params.userId;
-        const { given_name, surname, email} = req.body;
+        const { name, username, surname, description} = req.body;
 
         const existingUser = await db.User.findOne({
             where: { id: userId },
-            attributes: { exclude: ['password']}
+            attributes: { exclude: ['password_hash']}
         });
 
         if(!existingUser){
@@ -66,13 +66,13 @@ const updateUser = async (req, res) => {
         }
 
         await db.User.update(
-            { given_name, surname, email},
+            { name, surname, username, description},
             { where: { id: userId } }
         );
 
         const updatedUser = await db.User.findOne({
             where: { id: userId },
-            attributes: { exclude: ['password'] }
+            attributes: { exclude: ['password_hash'] }
         });
 
         return res.status(200).json(updatedUser);

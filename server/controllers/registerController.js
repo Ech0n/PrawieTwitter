@@ -3,7 +3,7 @@ const PasswordManager = require("../auth/passwordManager");
 
 const register = async (req, res) => {
     try {
-        const { given_name, surname, email, password, password2 } = req.body;
+        const { username, email, password, password2 } = req.body;
 
         const existingUser = await db.User.findOne({
             where: { email: email }
@@ -19,7 +19,7 @@ const register = async (req, res) => {
         const hashedPassword = PasswordManager.hash(password);
 
         const newUser = await db.User.create(
-            { given_name, surname, email, password: hashedPassword });
+            {username, email, password_hash: hashedPassword });
         return res.status(201).json({ message: 'User created' });
     } catch (error) {
         return res.status(500).json({ error: error.message });

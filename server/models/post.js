@@ -2,7 +2,7 @@ const {DataTypes  } = require('sequelize');
 
 const sequelize = require("../database/config");
 
-// id domyślnie się dodaje
+// ID by default
 const Post = sequelize.define(
     'Post',
 {
@@ -17,13 +17,19 @@ const Post = sequelize.define(
         photo_path: {
             type: DataTypes.STRING,
             allowNull: true,
-        },
-        posted_at: {
-            type: DataTypes.DATE,
-            allowNull: false,
-            defaultValue: DataTypes.NOW,
         }
+    },{
+        tableName: 'Posts',
+        timestamps: true,
+        createdAt: true,
+        updatedAt: false
     }
 );
+
+Post.associate = (models) => {
+    Post.belongsTo(models.User, { foreignKey: "owner_id" });
+    Post.hasMany(models.Report);
+    Post.hasMany(models.Comment);
+};
 
 module.exports = Post;
