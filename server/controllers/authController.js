@@ -2,22 +2,19 @@ const passport = require("passport");
 
 const login = (req, res, next) => {
     passport.authenticate('local', (err, user, info) => {
-        if (!user) {
-            return res.status(400).json(info);
-        }
-
-        if (err) {
+        if (err)
             return res.status(500).json({
                 error: 'Internal server error'
             });
-        }
+
+        if (!user)
+            return res.status(400).json(info);
 
         req.logIn(user, (loginErr) => {
-            if (loginErr) {
+            if (loginErr)
                 return res.status(500).json({
                     error: 'Failed to log in'
                 });
-            }
             return res.status(200).json({ message: 'Authenticated successfully' });
         });
     })(req, res, next);
