@@ -4,6 +4,7 @@ const logger = require('morgan'); // middleware do kolorowych logów
 const cors = require('cors');
 const session = require('express-session');
 const passport = require('passport')
+const path = require('path');
 
 const usersRouter = require('./routes/users');
 const registerRouter = require('./routes/register');
@@ -40,6 +41,9 @@ app.use(
 app.use(passport.initialize());
 app.use(passport.session({}));
 
+// Route do statycznych plikow z folderu public
+// W wersji produkcyjnej z buildowane pliki client trafiaja do folderu public
+app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/users', usersRouter);
 app.use('/register', registerRouter);
