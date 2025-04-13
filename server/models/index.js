@@ -23,11 +23,13 @@ const db = {
     reportID_to_name
 }
 
-Object.keys(db).forEach((modelName) => {
-    if (db[modelName].associate) {
-        db[modelName].associate(db);
-    }
-});
+if (!process.env.VITEST) {
+    Object.keys(db).forEach((modelName) => {
+        if (db[modelName].associate) {
+            db[modelName].associate(db);
+        }
+    });
+}
 
 // Synchronization
 sequelize.sync({ alter: false }).then(async () => {
