@@ -9,6 +9,7 @@
 - `npm run client` runs client server only
 - `npm run server` runs server only
 - `cd client && npm run lint` runs eslint for client files
+- `npm test` runs server's vitest tests
 
 
 ### Endpoints

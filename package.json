@@ -4,7 +4,7 @@
   "description": "A basic twitter alternative",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
+    "test": "cd server && npm test",
     "install-all": " npm ci --include=dev && cd server && npm ci --include=dev && cd ../client && npm ci --include=dev",
     "server": "cd server && npm run dev",
     "client": "cd client && npm run dev",
