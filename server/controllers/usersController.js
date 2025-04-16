@@ -16,7 +16,7 @@ const getUser = async (req, res, sortOption) => {
 
         const existingUser = await db.User.findOne({
             where: { id: userId },
-            attributes: { exclude: ['password_hash']}
+            attributes: { exclude: ['password_hash', "id"]}
         });
 
         if(!existingUser){
@@ -58,7 +58,7 @@ const updateUser = async (req, res) => {
 
         const existingUser = await db.User.findOne({
             where: { id: userId },
-            attributes: { exclude: ['password_hash']}
+            attributes: { exclude: ['password_hash', 'id']}
         });
 
         if(!existingUser){
@@ -72,7 +72,7 @@ const updateUser = async (req, res) => {
 
         const updatedUser = await db.User.findOne({
             where: { id: userId },
-            attributes: { exclude: ['password_hash'] }
+            attributes: { exclude: ['password_hash', 'id'] }
         });
 
         return res.status(200).json(updatedUser);

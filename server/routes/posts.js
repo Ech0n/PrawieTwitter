@@ -13,7 +13,7 @@ router.post('/', uploadPhoto.single('photo'), postsController.createPost);
 
 router.delete('/:postId', postsController.deletePost);
 
-router.put('/:postId', postsController.updatePost);
+router.put('/:postId', uploadPhoto.single('photo'), postsController.updatePost);
 
 
 

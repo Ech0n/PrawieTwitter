@@ -17,6 +17,10 @@ const Post = sequelize.define(
         photo_path: {
             type: DataTypes.STRING,
             allowNull: true,
+        },
+        likes_count: {
+            type: DataTypes.INTEGER,
+            defaultValue: 0
         }
     },{
         tableName: 'Posts',
@@ -28,8 +32,8 @@ const Post = sequelize.define(
 
 Post.associate = (models) => {
     Post.belongsTo(models.User, { foreignKey: "owner_id" });
-    Post.hasMany(models.Report);
-    Post.hasMany(models.Comment);
+    Post.hasMany(models.Report, { foreignKey: "post_id" });
+    Post.hasMany(models.Comment, { foreignKey: "post_id" });
 };
 
 module.exports = Post;

@@ -17,8 +17,8 @@ const db = {
     sequelize,
     User,
     Post,
-    Followers,
     Comment,
+    Followers,
     Report,
     reportID_to_name
 }
@@ -32,8 +32,8 @@ if (!process.env.VITEST) {
 }
 
 // Synchronization
-sequelize.sync({ alter: false }).then(async () => {
-    console.log('Database & tables created!');
-});
+sequelize.sync({force: false })
+    .then(() => console.log("DB sync OK"))
+    .catch((err) => console.error("DB sync error:", err));
 
 module.exports = db;

@@ -54,9 +54,9 @@ const User = sequelize.define(
 );
 
 User.associate = (models) => {
-    User.hasMany(models.Post);
-    User.hasMany(models.Report);
-    User.hasMany(models.Comment);
+    User.hasMany(models.Post, { foreignKey: "owner_id" });
+    User.hasMany(models.Report, { foreignKey: "reporter_id" });
+    User.hasMany(models.Comment, { foreignKey: "owner_id" });
 
     // Many-To_Many relationship
     User.belongsToMany(User, {

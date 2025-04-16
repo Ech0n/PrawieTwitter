@@ -6,11 +6,11 @@ const fs = require('fs');
 // w zależności od tego czy ownerId jest podany w zapytaniu
 const getAllPosts = async (req, res) => {
     try {
-        const { ownerId } = req.body;
+        const { owner_id } = req.body;
 
-        if (ownerId) {
+        if (owner_id) {
             const posts = await db.Post.findAll({
-                where: { owner_id: ownerId }
+                where: { owner_id: owner_id }
             });
 
             if (!posts) {
@@ -104,7 +104,8 @@ const deletePost = async (req, res) => {
 const updatePost = async (req, res) => {
     try{
         const postId = req.params.postId;
-        const { content, photo_path } = req.body;
+        const { content} = req.body;
+        const photo_path = req.file ? req.file.path : null;
 
         const existingPost = await db.Post.findOne({
             where: { id: postId },
@@ -114,12 +115,18 @@ const updatePost = async (req, res) => {
             return res.status(404).json({message: "Post with selected id not found"});
         }
 
-        await db.User.update(
-            { content, photo_path },
+        const updateData = { content };
+
+        if (photo_path !== null) {
+            updateData.photo_path = photo_path;
+        }
+
+        await db.Post.update(
+            updateData,
             { where: { id: postId } }
         );
 
-        const updatedPost = await db.User.findOne({
+        const updatedPost = await db.Post.findOne({
             where: { id: postId },
         });
 
@@ -128,7 +135,5 @@ const updatePost = async (req, res) => {
         return res.status(500).json({ error: error.message });
     }
 }
-
-
 
 module.exports = {getAllPosts, getPost, createPost, deletePost, updatePost};

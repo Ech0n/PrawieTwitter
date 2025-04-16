@@ -10,6 +10,7 @@ const usersRouter = require('./routes/users');
 const registerRouter = require('./routes/register');
 const authRouter = require('./routes/auth');
 const postsRouter = require('./routes/posts');
+const commentsRouter = require('./routes/comments');
 
 const app = express();
 const authLocalStrategy = require("./auth/authLocalStrategy");
@@ -49,5 +50,6 @@ app.use('/users', usersRouter);
 app.use('/register', registerRouter);
 app.use('/auth', authRouter);
 app.use('/posts', postsRouter);
+app.use('/comments', commentsRouter);
 
 module.exports = app;
