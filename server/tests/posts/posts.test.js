@@ -1,6 +1,6 @@
 import { describe, it, expect, vi, beforeEach } from 'vitest';
-import { getAllPosts } from '../controllers/postsController';
-import db from '../models';
+import { getAllPosts } from '../../controllers/postsController';
+import db from '../../models';
 
 const mockPosts = [
     { id: 1, owner_id: 1, content: 'First post' },
