@@ -2,6 +2,8 @@ import React from "react";
 import ReactDOM from "react-dom/client";
 import logo from "./logo.svg";
 import "./styles.css";
+import {BrowserRouter} from "react-router-dom";
+import AppRoutes from "./routes.jsx";
 
 function Sidebar() {
   return (
@@ -140,9 +142,11 @@ function MainPanel() {
 function App() {
   return (
     <div id="app-container">
+
       <Sidebar />
       <MainPanel />
       <Details />
+      <AppRoutes />
     </div>
   );
 }
@@ -150,7 +154,9 @@ function App() {
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
   <React.StrictMode>
-    <App />
+    <BrowserRouter>
+      <App />
+    </BrowserRouter>
   </React.StrictMode>
 );
 export default App;
