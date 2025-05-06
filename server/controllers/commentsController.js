@@ -1,7 +1,7 @@
 const db = require("../models");
 const createComment = async (req, res) => {
     try {
-        const post_id = req.params.postId;
+        const post_id = req.params.postID;
         const {content} = req.body;
 
         if (!req.user){
@@ -9,6 +9,10 @@ const createComment = async (req, res) => {
         }
 
         const owner_id = req.user.id;
+        const existingPost = db.Post.findByPk(post_id);
+        if(!existingPost){
+            return res.status(404).json({ error: "Post not found." });
+        }
 
         await db.Comment.create({
             owner_id,
@@ -81,7 +85,7 @@ const deleteComment = async (req, res) => {
 
 const getPostComments = async (req, res) => {
     try{
-        const post_id = req.params.postId;
+        const post_id = req.params.postID;
 
         const comments = await db.Comment.findAll({
             where: { post_id},

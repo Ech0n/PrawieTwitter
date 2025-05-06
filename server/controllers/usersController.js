@@ -12,7 +12,7 @@ const getAllUser = async (req, res, sortOption) => {
 
 const getUser = async (req, res, sortOption) => {
     try {
-        const userId = req.params.userId;
+        const userId = req.params.userID;
 
         const existingUser = await db.User.findOne({
             where: { id: userId },
@@ -31,7 +31,7 @@ const getUser = async (req, res, sortOption) => {
 
 const deleteUser = async (req, res) => {
     try{
-        const userId = req.params.userId;
+        const userId = req.params.userID;
 
         const existingUser = await db.User.findOne({
             where: { id: userId }
@@ -53,7 +53,7 @@ const deleteUser = async (req, res) => {
 
 const updateUser = async (req, res) => {
     try{
-        const userId = req.params.userId;
+        const userId = req.params.userID;
         const { name, username, surname, description} = req.body;
 
         const existingUser = await db.User.findOne({

@@ -19,13 +19,9 @@ const register = async (req, res) => {
         if (existingUser){
             return res.status(400).json({message: "username already in use"});
         }
-        // TODO: fields validation
-        if (password !== password2)
-            return res.status(400).json({message: "Passwords don't match"});
-
         const hashedPassword = PasswordManager.hash(password);
 
-        const newUser = await db.User.create(
+        await db.User.create(
             {username, email, password_hash: hashedPassword });
         return res.status(201).json({ message: 'User created' });
     } catch (error) {

@@ -29,7 +29,7 @@ const getAllPosts = async (req, res) => {
 
 const getPost = async (req, res, sortOption) => {
     try {
-        const postId = req.params.postId;
+        const postId = req.params.postID;
 
         const existingPost = await db.Post.findOne({
             where: { id: postId }
@@ -66,7 +66,7 @@ const createPost = async (req, res) => {
 
 const deletePost = async (req, res) => {
     try{
-        const postId = req.params.postId;
+        const postId = req.params.postID;
 
         const existingPost = await db.Post.findOne({
             where: { id: postId }
@@ -103,7 +103,7 @@ const deletePost = async (req, res) => {
 
 const updatePost = async (req, res) => {
     try{
-        const postId = req.params.postId;
+        const postId = req.params.postID;
         const { content} = req.body;
         const photo_path = req.file ? req.file.path : null;
 
