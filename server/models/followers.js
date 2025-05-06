@@ -22,4 +22,16 @@ const Followers = sequelize.define(
     },
 );
 
+Followers.associate = (models) => {
+    Followers.belongsTo(models.User, {
+        foreignKey: 'follower_id',
+        as: 'FollowerUser'
+    });
+
+    Followers.belongsTo(models.User, {
+        foreignKey: 'following_id',
+        as: 'FollowingUser'
+    });
+}
+
 module.exports = Followers;

@@ -5,12 +5,19 @@ const register = async (req, res) => {
     try {
         const { username, email, password, password2 } = req.body;
 
-        const existingUser = await db.User.findOne({
+        let existingUser = await db.User.findOne({
             where: { email: email }
         });
-
         if (existingUser){
             return res.status(400).json({message: "Email already in use"});
+        }
+        existingUser = await db.User.findOne({
+            where: {
+                username: username
+            }
+        })
+        if (existingUser){
+            return res.status(400).json({message: "username already in use"});
         }
         // TODO: fields validation
         if (password !== password2)

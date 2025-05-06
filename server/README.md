@@ -57,14 +57,27 @@
 
 #### Comments
 - Get Comments for Post
-  - **\[GET\] /comments/{pot_id{**
+  - **\[GET\] /comments/{post_id{**
 - Create a Comment
-    - **\[POST\] /comments/{post_id}**
-        - mandatory fields:
-            - content
+  - User needs to be Log In
+  - **\[POST\] /comments/{post_id}**
+    - mandatory fields:
+      - content
 - Update Comment
   - **\[PUT\] /comments/{comment_id}**
       - mandatory fields:
         - content
 - Delete Comment
   - **\[DELETE\] /comments/{comment_id}**
+
+#### Followers
+- Get Followers
+    - **\[GET\] /followers/{user_id}**
+- Get Following users
+    - **\[GET\] /followers/following/{user_id}**
+- Create Follow
+  - User needs to be Log In
+  - **\[POST\] /followers/{user_id}**
+- Delete Comment
+  - User needs to be Log In
+  - **\[DELETE\] /followers/{user_id}**

@@ -11,6 +11,7 @@ const registerRouter = require('./routes/register');
 const authRouter = require('./routes/auth');
 const postsRouter = require('./routes/posts');
 const commentsRouter = require('./routes/comments');
+const followersRouter = require('./routes/followers');
 
 const app = express();
 const authLocalStrategy = require("./auth/authLocalStrategy");
@@ -51,5 +52,6 @@ app.use('/register', registerRouter);
 app.use('/auth', authRouter);
 app.use('/posts', postsRouter);
 app.use('/comments', commentsRouter);
+app.use('/followers', followersRouter);
 
 module.exports = app;
