@@ -13,18 +13,8 @@ function Sidebar() {
           </Link>
         </li>
         <li>
-          <Link to="/notifications" className="link">
-            Notifications
-          </Link>
-        </li>
-        <li>
-          <Link to="/messages" className="link">
-            Messages
-          </Link>
-        </li>
-        <li>
-          <Link to="/bookmarks" className="link">
-            Bookmarks
+          <Link to="/posts" className="link">
+            My posts
           </Link>
         </li>
         <li>
