@@ -15,7 +15,7 @@ const createStrategy = () => {
                 });
 
                 if (!user || !PasswordManager.compare(password, user.password_hash))
-                    return done(null, false, { message: 'Bad Credentials' });
+                    return done(null, false, { error: 'Bad Credentials' });
 
                 // If everything is good, return user
                 return done(null, user);
