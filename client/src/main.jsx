@@ -3,9 +3,6 @@ import ReactDOM from "react-dom/client";
 import "./styles.css";
 import { BrowserRouter } from "react-router-dom";
 import AppRoutes from "./routes.jsx";
-import Sidebar from "./components/Sidebar.jsx";
-import MainPanel from "./components/MainPanel.jsx";
-import Details from "./components/Details.jsx";
 
 function App() {
   return (

@@ -1,0 +1,75 @@
+.logo {
+  padding: 2rem;
+}
+
+:root {
+  --text-fontsize: 1.2rem;
+}
+
+.sign {
+  width: 100%;
+  height: 100%;
+  box-sizing: border-box;
+}
+
+.sign p {
+  font-size: var(--text-fontsize);
+}
+
+.sign h1 {
+  font-size: 50px;
+  font-weight: 400;
+}
+
+.sign-panel {
+  display: flex;
+  flex-direction: column;
+  height: 60vh;
+  width: 80%;
+  margin: auto;
+  text-align: center;
+  justify-content: space-between;
+}
+
+.sign-panel > form {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.sign-panel > form > input {
+  margin: 1rem;
+  text-align: center;
+  padding: 1rem;
+  border-radius: 16px;
+  border: 3px #555 solid;
+  font-weight: lighter;
+  font-size: 1.5rem;
+  height: 25px;
+}
+
+.sign-panel button {
+  padding: 1rem;
+  background-color: white;
+  color: black;
+  width: 50%;
+  margin: 0 auto;
+  font-size: var(--text-fontsize);
+}
+
+a {
+  color: #407aac;
+  font-size: var(--text-fontsize);
+}
+
+@media (min-width: 460px) {
+  .sign-panel {
+    width: 60%;
+  }
+}
+
+@media (min-width: 775px) {
+    .sign-panel {
+      width: 40%;
+    }
+  }

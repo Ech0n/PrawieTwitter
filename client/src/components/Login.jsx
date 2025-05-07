@@ -11,7 +11,7 @@ export default function Login() {
         <form>
           <input type="text" placeholder="Login" />
           <input type="password" placeholder="Password" />
-          <input type="submit" value="Sign In" />
+          <button type="submit">Sign In</button>
         </form>
         <p>
           No account? <a href="/register">Sign up</a>
