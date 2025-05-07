@@ -19,7 +19,7 @@ const app = express();
 const authLocalStrategy = require("./auth/authLocalStrategy");
 
 app.use(cors({
-    origin: process.env.REACT_ORIGIN || 'http://localhost:3001',
+    origin: process.env.REACT_ORIGIN || 'http://localhost:5173',
     credentials: true
 }));
 app.use(logger('dev'));
