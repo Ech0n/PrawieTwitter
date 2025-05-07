@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import logo from "../logo.svg";
 import "../login.css";
-import { useLogin } from "../hooks/loginUser.js";
+import { useLogin } from "../hooks/useLogin.js";
 import { useNavigate } from 'react-router-dom';
 
 export default function Login() {
