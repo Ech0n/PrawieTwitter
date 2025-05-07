@@ -1,0 +1,53 @@
+* {
+    font-size: 24px;
+}
+form {
+    border: 2px solid #555;
+    padding: 30px;
+    border-radius: 16px;
+    width: 680px;
+}
+
+h1 {
+    text-align: center;
+    font-size: 72px;
+    margin-bottom: 30px;
+}
+
+label {
+    display: block;
+    margin-bottom: 5px;
+}
+
+input[type="text"],
+input[type="email"],
+input[type="password"],
+textarea,
+select {
+    width: 654px;
+    padding: 10px;
+    margin-bottom: 15px;
+    border: 3px solid #555;
+    border-radius: 10px;
+}
+
+textarea {
+    resize: vertical;
+    height: 80px;
+}
+
+button {
+    padding: 10px;
+    border: 1px solid #00aaff;
+    border-radius: 6px;
+    cursor: pointer;
+    justify-content: center;
+}
+
+button:hover {
+    background-color: rgb(44, 112, 190, 0.5);
+}
+
+.buttonContainer {
+    text-align: center;
+}

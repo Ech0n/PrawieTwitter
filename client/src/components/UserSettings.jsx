@@ -1,14 +1,12 @@
 import React from 'react';
 import {useState} from "react";
+import "../SettingsForm.css"
 
 function UserSettings() {
     const [email, setEmail] = useState('');
     const [nickname, setNickname] = useState('');
     const [name, setName] = useState('');
     const [lastName, setLastName] = useState('');
-    const [address, setAddress] = useState('');
-    const [phoneNumber, setPhoneNumber] = useState('');
-    const [gender, setGender] = useState('');
     const [description, setDescription] = useState('');
 
     function handleSave(){
@@ -18,7 +16,6 @@ function UserSettings() {
 
     return (
         <div>
-            {/*TODO: add styles*/}
             <h1>Settings</h1>
             <form>
                 <div>
@@ -38,22 +35,13 @@ function UserSettings() {
                     <input type="text" value={lastName} onChange={e => setLastName(e.target.value)}/>
                 </div>
                 <div>
-                    <label>address</label>
-                    <input type="text" value={address} onChange={e => setAddress(e.target.value)}/>
-                </div>
-                <div>
-                    <label>phoneNumber</label>
-                    <input type="text" value={phoneNumber} onChange={e => setPhoneNumber(e.target.value)}/>
-                </div>
-                <div>
-                    <label>gender</label>
-                    <input type="text" value={gender} onChange={e => setGender(e.target.value)}/>
-                </div>
-                <div>
                     <label>description</label>
-                    <input type="text" value={description} onChange={e => setDescription(e.target.value)}/>
+                    <textarea value={description} onChange={e => setDescription(e.target.value)}></textarea>
                 </div>
-                <button type="submit">save</button>
+                <div className="buttonContainer">
+                    <button type="submit">save</button>
+                </div>
+
             </form>
         </div>
     )
