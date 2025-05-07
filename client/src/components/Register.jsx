@@ -2,6 +2,8 @@ import React from "react";
 import "../login.css";
 import logo from "../logo.svg";
 import { useForm } from "react-hook-form";
+import { useRegister } from "../hooks/useRegister.js";
+import { useNavigate } from 'react-router-dom';
 
 export default function Register() {
   const {
@@ -14,12 +16,17 @@ export default function Register() {
     mode: "onChange",
   });
 
+  const navigate = useNavigate();
+  const {registerUser, loading, error } = useRegister();
+
   const password = watch("password");
   
-  const onSubmit = (data) => {
-    //TODO wysyłanie danych do serwera
-
-    reset();
+  const onSubmit = async (data) => {
+    const result = await registerUser(data);
+    if (result) {
+      reset();
+      navigate('/login');
+    }
   };
 
   return (
@@ -27,23 +34,36 @@ export default function Register() {
       <img src={logo} alt="logo" className="logo" />
       <div className="sign-panel">
         <h1>Sign Up</h1>
+        {error && <p className="error">{error}</p>}
         <form onSubmit={handleSubmit(onSubmit)}>
           <input
+              type="text"
+              placeholder="Email address"
+              {...register("email", {
+                required: "Email is required",
+                pattern: {
+                  value: /^[^@]+@[^@]+\.[^@]+$/,
+                  message: "Incorrect format of email",
+                },
+              })}
+          />
+          {errors.email && <p className="form-error">{errors.email.message}</p>}
+          <input
             type="text"
-            placeholder="Login"
-            {...register("login", {
-              required: "Login is required",
+            placeholder="Username"
+            {...register("username", {
+              required: "username is required",
             })}
           />
-          {errors.login && <p className="form-error">{errors.login.message}</p>}
+          {errors.username && <p className="form-error">{errors.username.message}</p>}
           <input
             type="password"
             placeholder="Password"
             {...register("password", {
               required: "Password is required",
               minLength: {
-                value: 6,
-                message: "Min. 6 chars",
+                value: 8,
+                message: "Min. 8 chars",
               },
             })}
           />
@@ -61,20 +81,9 @@ export default function Register() {
           {errors.password2 && (
             <p className="form-error">{errors.password2.message}</p>
           )}
-          <input
-            type="text"
-            placeholder="Email address"
-            {...register("email", {
-              required: "Email is required",
-              pattern: {
-                value: /^[^@]+@[^@]+\.[^@]+$/,
-                message: "Incorrect format of email",
-              },
-            })}
-          />
-          {errors.email && <p className="form-error">{errors.email.message}</p>}
-          <button type="submit" disabled={!isValid}>
-            Sign In
+
+          <button type="submit" disabled={!isValid || loading}>
+            {loading ? "Registering..." : "Sign Up"}
           </button>
         </form>
         <p>
