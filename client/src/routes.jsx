@@ -5,6 +5,7 @@ import UserSettings from "./components/UserSettings.jsx";
 import Login from "./components/Login.jsx";
 import DashboardLayout from "./components/DashbordLayout.jsx";
 import MainPanel from "./components/MainPanel.jsx";
+import Register from "./components/Register.jsx";
 
 export default function AppRoutes() {
   return (
@@ -14,6 +15,7 @@ export default function AppRoutes() {
         <Route path="/userSettings" element={<UserSettings />} />
       </Route>
       <Route path="/login" element={<Login />} />
+      <Route path="/register" element={<Register />} />
       <Route path="*" element={<NotFound />} />
     </Routes>
   );

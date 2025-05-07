@@ -1,5 +1,6 @@
-.logo {
+.sign .logo {
   padding: 2rem;
+  position: absolute;
 }
 
 :root {
@@ -14,17 +15,19 @@
 
 .sign p {
   font-size: var(--text-fontsize);
+  padding: 1rem;
 }
 
 .sign h1 {
   font-size: 50px;
   font-weight: 400;
+  padding-bottom: 1rem;
 }
 
 .sign-panel {
+  padding: 5rem;
   display: flex;
   flex-direction: column;
-  height: 60vh;
   width: 80%;
   margin: auto;
   text-align: center;
@@ -45,7 +48,7 @@
   border: 3px #555 solid;
   font-weight: lighter;
   font-size: 1.5rem;
-  height: 25px;
+  height: 20px;
 }
 
 .sign-panel button {
@@ -53,13 +56,28 @@
   background-color: white;
   color: black;
   width: 50%;
-  margin: 0 auto;
+  margin: 0.7rem auto 0 auto;
   font-size: var(--text-fontsize);
 }
 
-a {
+.sign-panel button:hover {
+  cursor: pointer;
+  background-color: antiquewhite;
+}
+
+.sign-panel button:disabled {
+  background-color: #434343;
+  cursor: default;
+}
+
+.sign a {
   color: #407aac;
   font-size: var(--text-fontsize);
+}
+
+.sign p.form-error {
+  padding: 0;
+  color: rgb(218, 118, 118);
 }
 
 @media (min-width: 460px) {
@@ -69,7 +87,7 @@ a {
 }
 
 @media (min-width: 775px) {
-    .sign-panel {
-      width: 40%;
-    }
+  .sign-panel {
+    width: 40%;
   }
+}
