@@ -5,6 +5,8 @@ const Post = require('./post');
 const Followers = require('./followers');
 const Comment = require('./comment');
 const Report = require('./report');
+const PostLikes = require('./post_likes');
+const CommentLikes = require('./comment_likes');
 
 const reportID_to_name = {
     0 : "spam",
@@ -20,6 +22,8 @@ const db = {
     Comment,
     Followers,
     Report,
+    PostLikes,
+    CommentLikes,
     reportID_to_name
 }
 

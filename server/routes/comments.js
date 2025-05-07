@@ -4,10 +4,10 @@ const router = express.Router();
 const validateID = require("../middleware/validateID")
 
 // Get Post Comments
-router.get('/:postID', validateID, commentsController.getPostComments);
+router.get('/:postID', commentsController.getPostComments);
 
 // Create Comment
-router.post('/:postID', validateID, commentsController.createComment);
+router.post('/:postID', commentsController.createComment);
 
 // Delete Comment
 router.delete('/:commentID', validateID, commentsController.deleteComment);

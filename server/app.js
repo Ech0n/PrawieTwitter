@@ -12,6 +12,8 @@ const authRouter = require('./routes/auth');
 const postsRouter = require('./routes/posts');
 const commentsRouter = require('./routes/comments');
 const followersRouter = require('./routes/followers');
+const postLikesRouter = require('./routes/post_likes');
+const commentLikesRouter = require('./routes/comment_likes');
 
 const app = express();
 const authLocalStrategy = require("./auth/authLocalStrategy");
@@ -53,5 +55,8 @@ app.use('/auth', authRouter);
 app.use('/posts', postsRouter);
 app.use('/comments', commentsRouter);
 app.use('/followers', followersRouter);
+app.use('/post_likes', postLikesRouter);
+app.use('/comment_likes', commentLikesRouter);
+
 
 module.exports = app;

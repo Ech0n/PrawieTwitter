@@ -81,3 +81,19 @@
 - Delete Comment
   - User needs to be Log In
   - **\[DELETE\] /followers/{user_id}**
+
+#### CommentLikes
+- Get comment likes
+    - **\[GET\] /comment_likes/{comment_id}**
+- Like comment
+    - **\[POST\] /comment_likes/{comment_id}**
+- Dislike comment
+    - **\[POST\] /comment_likes/{comment_id}**
+
+#### PostLikes
+- Get post likes
+    - **\[GET\] /post_likes/{post_id}**
+- Like post
+    - **\[POST\] /post_likes/{post_id}**
+- Dislike post
+    - **\[POST\] /post_likes/{post_id}**
