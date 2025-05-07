@@ -1,6 +1,6 @@
 import React from 'react';
 import {useState} from "react";
-import "../SettingsForm.css"
+import "../settingsFormStyles.css"
 
 function UserSettings() {
     const [email, setEmail] = useState('');
