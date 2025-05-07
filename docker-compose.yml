@@ -1,0 +1,6 @@
+services:
+  my-service:
+    image: matid90/prawie-twitter:latest
+    container_name: my-container
+    ports:
+      - "3000:3000"
