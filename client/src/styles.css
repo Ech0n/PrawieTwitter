@@ -120,3 +120,6 @@
 .details-topic {
   color: var(--main-middle);
 }
+.link{
+  text-decoration: none;
+}
