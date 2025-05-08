@@ -15,7 +15,7 @@ function UserSettings() {
     }
 
     return (
-        <div>
+        <div className='settings'>
             <h1>Settings</h1>
             <form>
                 <div>

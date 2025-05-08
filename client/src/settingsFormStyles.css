@@ -1,29 +1,29 @@
-* {
+.settings * {
     font-size: 24px;
 }
-form {
+.settings form {
     border: 2px solid #555;
     padding: 30px;
     border-radius: 16px;
     width: 680px;
 }
 
-h1 {
+.settings h1 {
     text-align: center;
     font-size: 72px;
     margin-bottom: 30px;
 }
 
-label {
+.settings label {
     display: block;
     margin-bottom: 5px;
 }
 
-input[type="text"],
-input[type="email"],
-input[type="password"],
-textarea,
-select {
+.settings input[type="text"],
+.settings input[type="email"],
+.settings input[type="password"],
+.settings textarea,
+.settings select {
     width: 654px;
     padding: 10px;
     margin-bottom: 15px;
@@ -31,12 +31,12 @@ select {
     border-radius: 10px;
 }
 
-textarea {
+.settings textarea {
     resize: vertical;
     height: 80px;
 }
 
-button {
+.settings button {
     padding: 10px;
     border: 1px solid #00aaff;
     border-radius: 6px;
@@ -44,10 +44,10 @@ button {
     justify-content: center;
 }
 
-button:hover {
+.settings button:hover {
     background-color: rgb(44, 112, 190, 0.5);
 }
 
-.buttonContainer {
+.settings .buttonContainer {
     text-align: center;
 }
