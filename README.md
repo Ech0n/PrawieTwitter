@@ -2,6 +2,9 @@
 
 ## How to run:
 
+#### Latest dockerhub build:
+Run `docker compose up` (or `docker-compose up`)
+
 #### development build:
 1. Install all dependencies by running: `npm run install-all` in root directory.
 2. Run `npm run dev` to start both client and server in debug mode. 
