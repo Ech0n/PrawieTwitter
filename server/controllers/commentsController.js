@@ -9,7 +9,7 @@ const createComment = async (req, res) => {
         }
 
         const owner_id = req.user.id;
-        const existingPost = db.Post.findByPk(post_id);
+        const existingPost = await db.Post.findByPk(post_id);
         if(!existingPost){
             return res.status(404).json({ error: "Post not found." });
         }

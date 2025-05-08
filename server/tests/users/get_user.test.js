@@ -14,7 +14,7 @@ describe('getUser', () => {
       email: 'johnthegrandetester@test.com'
     };
 
-    const req = { params: { userId: 1 } };
+    const req = { params: { userID: 1 } };
     const res = {
       status: vi.fn().mockReturnThis(),
       json: vi.fn()
@@ -34,7 +34,7 @@ describe('getUser', () => {
   });
 
   it('should return message if user not found', async () => {
-    const req = { params: { userId: 999 } };
+    const req = { params: { userID: 999 } };
     const res = {
       status: vi.fn().mockReturnThis(),
       json: vi.fn()

@@ -8,7 +8,7 @@ describe('deletePost', () => {
   });
 
   it('should delete the post if it exists', async () => {
-    const req = { params: { postId: 1 } };
+    const req = { params: { postID: 1 } };
     const res = {
       status: vi.fn().mockReturnThis(),
       json: vi.fn()
@@ -28,7 +28,7 @@ describe('deletePost', () => {
   });
 
   it('should return a message if the post does not exist', async () => {
-    const req = { params: { postId: 999 } };
+    const req = { params: { postID: 999 } };
     const res = {
       status: vi.fn().mockReturnThis(),
       json: vi.fn()

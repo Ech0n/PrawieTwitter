@@ -9,7 +9,7 @@ describe('updateUser', () => {
 
   it('should update the user if they exist', async () => {
     const req = {
-      params: { userId: 1 },
+      params: { userID: 1 },
       body: {
         name: 'John',
         surname: 'Tester',
@@ -59,7 +59,7 @@ describe('updateUser', () => {
 
   it('should return 404 if user does not exist', async () => {
     const req = {
-      params: { userId: 999 },
+      params: { userID: 999 },
       body: {
         name: 'Ghost',
         surname: 'User',

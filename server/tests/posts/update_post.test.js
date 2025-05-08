@@ -9,7 +9,7 @@ describe('updatePost', () => {
 
   it('should update post content if post exists', async () => {
     const req = {
-      params: { postId: 1 },
+      params: { postID: 1},
       body: { content: 'Updated content' },
       file: undefined
     };
@@ -53,7 +53,7 @@ describe('updatePost', () => {
 
   it('should return 404 if post does not exist', async () => {
     const req = {
-      params: { postId: 999 },
+      params: { postID: 999 },
       body: { content: 'New content' },
       file: undefined
     };
