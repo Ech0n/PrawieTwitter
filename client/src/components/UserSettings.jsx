@@ -3,21 +3,51 @@ import {useState} from "react";
 import "../settingsFormStyles.css"
 
 function UserSettings() {
+    //TODO get user data to put in the form
     const [email, setEmail] = useState('');
     const [nickname, setNickname] = useState('');
     const [name, setName] = useState('');
     const [lastName, setLastName] = useState('');
     const [description, setDescription] = useState('');
+    let userId = 0; //TODO get real user Id
 
     function handleSave(){
-        //TODO: send data to server
-        alert("Possibly changed data")
+        const url = `http://localhost:3000/users/${userId}`;
+        const requestOptions = {
+            method: "PUT",
+            headers: { "Content-Type": "application/json"},
+            body: JSON.stringify({
+                "name": name,
+                "surname": lastName,
+                "description": description,
+                "username": nickname
+            })
+        };
+
+        fetch(url, requestOptions)
+            .then(async response => {
+                let data;
+                try {
+                    data = await response.json();
+                } catch (e) {
+                    data = {"error": "Invalid response from server"};
+                }
+
+                if(!response.ok){
+                    alert("Couldn't save user data. Details: "+data);
+                } else {
+                    alert("Saved changed data");
+                }
+            })
+            .catch(error => {
+                alert("Couldn't save user data. Details: "+error);
+            })
     }
 
     return (
         <div className='settings'>
             <h1>Settings</h1>
-            <form>
+            <form onSubmit={handleSave}>
                 <div>
                     <label>email</label>
                     <input type="email" value={email} onChange={e => setEmail(e.target.value)}/>
