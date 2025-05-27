@@ -123,3 +123,37 @@
 .link{
   text-decoration: none;
 }
+
+.post-icons {
+  height: 25px;
+  margin: 10px 5px 0 5px;
+  border: none;
+  border-radius: 0;
+}
+
+.comments-header-section {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin: 10px 5px;
+
+}
+
+.comments-header-text {
+  font-size: 32px;
+  margin: 0;
+}
+
+.blue-button {
+  padding: 5px 10px;
+  border-radius: 20px;
+  border-style: solid;
+  border-color: var(--main-accent);
+  cursor: pointer;
+}
+
+.comment {
+  padding: 10px;
+  margin: 5px;
+  border-style: solid;
+}

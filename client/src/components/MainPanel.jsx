@@ -1,4 +1,7 @@
-import React from "react";
+import React, {useState} from "react";
+import CommentIcon from "../icons/chat-box.png";
+import HeartIcon from "../icons/heart.png"
+import FullHeartIcon from "../icons/full-heart.png"
 
 function Search() {
   function handleSearch(e) {
@@ -34,7 +37,43 @@ function Post() {
   );
 }
 
-function Note({ note }) {
+function likeThePost(){
+  // TODO zrobić wysłanie polubienia do bazy
+  // TODO dodać możliwość usunięcia polubienia
+}
+
+
+
+export function Note({ note }) {
+  const [showComments, setShowComments] = useState(false);
+  function toggleComments(){
+    setShowComments(prev => !prev);
+  }
+
+  function CommentsSection(){
+    return(
+        <div id="notes-box">
+          <div className="comments-header-section">
+            <h1 className="comments-header-text">Komentarze</h1>
+            <button className=" blue-button" onClick={toggleComments}>Zamknij komentarze</button>
+          </div>
+
+
+          <div className="comment">
+            <p>Super!</p>
+          </div>
+          <div className="comment">
+            <p>Ciekawe</p>
+          </div>
+          <div className="comment">
+            <p>Czekam na więcej!</p>
+          </div>
+
+
+        </div>
+    );
+  }
+
   return (
     <div className="note">
       <div className="note-header">
@@ -43,6 +82,14 @@ function Note({ note }) {
         <span className="note-metadata">{note.creationTime}</span>
       </div>
       <div className="note-content">{note.content}</div>
+      <div className="note-bottom-part">
+        <button onClick={toggleComments} className="post-icons"><img className="post-icons" src={CommentIcon} alt="comment icon"/></button>
+        <span>2</span>  {/* TODO podpiąć realną liczbę */}
+        <button onClick={likeThePost} className="post-icons"><img className="post-icons" src={HeartIcon} alt={"Heart shaped like icon"}/></button>
+        {/* TODO zrobić, żeby się zmieniła ikonka serduszka na pełne serce, jeśli aktualny użytkownik polubił post */}
+        {showComments && <CommentsSection />}
+      </div>
+
     </div>
   );
 }
