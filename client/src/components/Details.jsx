@@ -1,24 +1,78 @@
-import React from 'react'
+import React, { useEffect, useState } from "react";
+import { useLogin } from "../hooks/useLogin";
+import { useCurrentUser } from "../hooks/useCurrentUser";
 
 function Details() {
-  const details = {
-    Name: "User",
-    Username: "@user0",
-    Notes: 1000,
-    Joined: "2021-01-01",
-    Followers: 100,
-    Following: 200,
-    Description:
-      "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
+  const { getUserData, getFolowers } = useCurrentUser();
+  const [user, setUser] = useState();
+  const [followers, setFollowers] = useState();
+  const { logout } = useLogin();
+  const [error, setError] = useState(false);
+
+  const buttonStyle = {
+    border: "1px solid white",
+    margin: "1rem",
+    width: "100px",
+    height: "75px"
   };
-  const followersWithNumberOfFollowsDescending = [
-    { topic: "@user4", followers: "120K" },
-    { topic: "@user5", followers: "85K" },
-    { topic: "@user6", followers: "45K" },
-  ];
+
+  useEffect(() => {
+    getUserData()
+      .then((data) => {
+        setUser(data);
+        return getFolowers(data.id);
+      })
+      .then((data) => {
+        setFollowers(data);
+      })
+      .catch((err) => setError(true));
+  }, []);
+
+  const details = {
+    Name: user?.user,
+    Username: user?.username,
+    Notes: user?.notes_count,
+    Joined: user?.createdAt.slice(0, 10),
+    Followers: user?.followers_count,
+    Following: user?.following_count,
+    Description: user?.description,
+  };
+
+  if (error) {
+    return (
+      <div
+        style={{ height: "100vh", textAlign: "center", padding: "1rem" }}
+        id="details-box"
+      >
+        <p>You're not signed in</p>
+        <button id="sign-in-button" style={buttonStyle}>
+          <a href="/login">Sign in</a>
+        </button>
+        <button id="sign-up-button" style={buttonStyle}>
+          <a href="/register">Sign up</a>
+        </button>
+      </div>
+    );
+  }
+
   return (
     <div id="details-box">
       <h2>User details</h2>
+      {user ? (
+        <button
+          id="logout-button"
+          onClick={() => {
+            logout().then(() => {
+              window.location.reload();
+            });
+          }}
+          style={{...buttonStyle, padding:"1rem" }}
+        >
+          Logout
+        </button>
+      ) : (
+        ""
+      )}
       <div id="basic-details-box">
         <h3>Basic</h3>
         <ul>
@@ -33,14 +87,18 @@ function Details() {
       <div id="followers-details-box">
         <h3>Followers</h3>
         <ul>
-          {followersWithNumberOfFollowsDescending.map((follower, index) => (
-            <li key={index}>
-              <span className="details-topic">{follower.topic}: </span>
-              <span className="details-sections">
-                {follower.followers} Followers
-              </span>
-            </li>
-          ))}
+          {followers && followers.length > 0 ? (
+            followers.map((follower, index) => (
+              <li key={index}>
+                <span className="details-topic">{follower.topic}: </span>
+                <span className="details-sections">
+                  {follower.followers} Followers
+                </span>
+              </li>
+            ))
+          ) : (
+            <p>You don't have any followers</p>
+          )}
         </ul>
       </div>
       <div id="calendar-details-box">

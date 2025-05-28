@@ -1,42 +1,56 @@
-import { useState } from 'react';
+import { useState } from "react";
 
 export function useLogin() {
-    const [loading, setLoading] = useState(false);
-    const [error, setError] = useState(null);
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState(null);
 
-    const login = async (email, password) => {
-        setLoading(true);
-        setError(null);
+  const login = async (email, password) => {
+    setLoading(true);
+    setError(null);
 
-        try {
-            return await fetchLogin(email, password);
-        } catch (err) {
-            setError(err.message);
-            return null;
-        } finally {
-            setLoading(false);
-        }
-    };
+    try {
+      return await fetchLogin(email, password);
+    } catch (err) {
+      setError(err.message);
+      return null;
+    } finally {
+      setLoading(false);
+    }
+  };
 
-    return { login, loading, error };
-}
-
-
-const fetchLogin = async (email, password) => {
-    const response = await fetch('http://localhost:3000/auth/login', {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json',
-        },
-        credentials: 'include',
-        body: JSON.stringify({ email, password }),
+  const logout = async () => {
+    const response = await fetch("http://localhost:3000/auth/logout", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      credentials: "include",
     });
 
-    const data = await response.json();
-
     if (!response.ok) {
-        throw new Error(data.error || 'Login failed');
+      throw new Error(data.error || "Login failed");
     }
+    return response;
+  };
 
-    return data;
+  return { login, logout, loading, error };
 }
+
+const fetchLogin = async (email, password) => {
+  const response = await fetch("http://localhost:3000/auth/login", {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    credentials: "include",
+    body: JSON.stringify({ email, password }),
+  });
+
+  const data = await response.json();
+
+  if (!response.ok) {
+    throw new Error(data.error || "Login failed");
+  }
+
+  return data;
+};
