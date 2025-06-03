@@ -1,15 +1,32 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 import {useState} from "react";
 import "../settingsFormStyles.css"
+import {useCurrentUser} from "../hooks/useCurrentUser.js";
 
 function UserSettings() {
-    //TODO get user data to put in the form
+    const {getUserData} = useCurrentUser()
+    const [user, setUser] = useState()
+    const [userId, setUserId] = useState(0)
+
     const [email, setEmail] = useState('');
     const [nickname, setNickname] = useState('');
     const [name, setName] = useState('');
     const [lastName, setLastName] = useState('');
     const [description, setDescription] = useState('');
-    let userId = 0; //TODO get real user Id
+
+    useEffect(() => {
+        getUserData().then(data => {
+            setUser(data)
+            setUserId(data.id)
+            setEmail(data.email ?? '')
+            setNickname(data.username ?? '')
+            setName(data.name ?? '')
+            setLastName(data.surname ?? '')
+            setDescription(data.description ?? '')
+        }).catch(err => {
+            console.log("Error while getting user data: "+err)
+        })
+    }, []);
 
     function handleSave(){
         const url = `http://localhost:3000/users/${userId}`;
@@ -50,7 +67,7 @@ function UserSettings() {
             <form onSubmit={handleSave}>
                 <div>
                     <label>email</label>
-                    <input type="email" value={email} onChange={e => setEmail(e.target.value)}/>
+                    <input type="email" readOnly={true} value={email} onChange={e => setEmail(e.target.value)}/>
                 </div>
                 <div>
                     <label>nickname</label>

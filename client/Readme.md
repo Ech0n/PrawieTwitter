@@ -1,7 +1,5 @@
 # Frontend PrawieTwitter
 
-# Frontend PrawieTwitter
-
 Pobieranie użytkownika 
 ```
   const {getUserData} = useCurrentUser();

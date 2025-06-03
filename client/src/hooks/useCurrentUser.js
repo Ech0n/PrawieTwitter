@@ -17,7 +17,7 @@ export function useCurrentUser() {
     return data.user;
   };
 
-  const getFolowers = async (userId) => {
+  const getFollowers = async (userId) => {
     const response = await fetch(`http://localhost:3000/followers/${userId}`, {
       method: "GET",
       headers: {
@@ -35,5 +35,5 @@ export function useCurrentUser() {
     return data.followers;
   };
 
-  return { getUserData, getFolowers };
+  return { getUserData, getFollowers};
 }
