@@ -29,7 +29,7 @@ function Details() {
   }, []);
 
   const details = {
-    Name: user?.user,
+    Name: user?.name,
     Username: user?.username,
     Notes: user?.notes_count,
     Joined: user?.createdAt.slice(0, 10),

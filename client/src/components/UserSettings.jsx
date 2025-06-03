@@ -5,7 +5,6 @@ import {useCurrentUser} from "../hooks/useCurrentUser.js";
 
 function UserSettings() {
     const {getUserData} = useCurrentUser()
-    const [user, setUser] = useState()
     const [userId, setUserId] = useState(0)
 
     const [email, setEmail] = useState('');
@@ -16,7 +15,6 @@ function UserSettings() {
 
     useEffect(() => {
         getUserData().then(data => {
-            setUser(data)
             setUserId(data.id)
             setEmail(data.email ?? '')
             setNickname(data.username ?? '')
@@ -41,24 +39,29 @@ function UserSettings() {
             })
         };
 
-        fetch(url, requestOptions)
-            .then(async response => {
-                let data;
-                try {
-                    data = await response.json();
-                } catch (e) {
-                    data = {"error": "Invalid response from server"};
-                }
+        if (userId !== 0){
+            fetch(url, requestOptions)
+                .then(async response => {
+                    let data;
+                    try {
+                        data = await response.json();
+                    } catch (e) {
+                        data = {"error": "Invalid response from server"};
+                    }
 
-                if(!response.ok){
-                    alert("Couldn't save user data. Details: "+data);
-                } else {
-                    alert("Saved changed data");
-                }
-            })
-            .catch(error => {
-                alert("Couldn't save user data. Details: "+error);
-            })
+                    if(!response.ok){
+                        alert("Couldn't save user data. Details: "+data);
+                    } else {
+                        alert("Saved changed data");
+                    }
+                })
+                .catch(error => {
+                    alert("Couldn't save user data. Details: "+error);
+                })
+        } else {
+            alert("User not logged in or couldn't fetch user data!")
+        }
+
     }
 
     return (
