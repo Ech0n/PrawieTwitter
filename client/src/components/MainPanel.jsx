@@ -2,10 +2,30 @@ import React, {useEffect, useState} from "react";
 
 import { Search } from "./Search";
 import { Notes } from "./Notes";
+import { useCurrentUser } from "../hooks/useCurrentUser.js";
 
 
 function Post() {
-  function handelResizing(e) {
+  const [content, setContent] = useState("");
+  const [ownerId, setOwnerId] = useState(null);
+  const [postError, setPostError] = useState("");
+  const { getUserData } = useCurrentUser();
+
+  useEffect(() => {
+    getUserData()
+      .then((user) => {
+        if (user && user.id) {
+          setOwnerId(user.id);
+        } else {
+          setPostError("You must be logged in to post.");
+        }
+      })
+      .catch(() => {
+        setPostError("Could not fetch user data. Please log in.");
+      });
+  }, [getUserData]);
+
+  function handleResizing(e) {
     e.target.style.height = "inherit";
     const computed = window.getComputedStyle(e.target);
     const height =
@@ -16,10 +36,60 @@ function Post() {
       parseInt(computed.getPropertyValue("border-bottom-width"), 10);
     e.target.style.height = `${height}px`;
   }
+
+  const handlePostSubmit = async () => {
+    if (!ownerId) {
+      alert("User not loaded or not logged in. Cannot create post.");
+      return;
+    }
+    if (!content.trim()) {
+      alert("Post content cannot be empty.");
+      return;
+    }
+
+    setPostError(""); 
+
+    try {
+      const response = await fetch("http://localhost:3000/posts", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        credentials: "include", 
+        body: JSON.stringify({
+          owner_id: ownerId,
+          content: content,
+        }),
+      });
+
+      const responseData = await response.json();
+
+      if (response.ok) {
+        alert("Post created successfully!");
+        setContent(""); 
+        // Optionally, trigger a refresh of the posts list here
+      } else {
+        alert(`Failed to create post: ${responseData.message || responseData.error || "Unknown error"}`);
+        setPostError(responseData.message || responseData.error || "Unknown error");
+      }
+    } catch (error) {
+      alert(`Error creating post: ${error.message}`);
+      setPostError(error.message);
+    }
+  };
+
   return (
     <div id="post-box">
-      <textarea onChange={handelResizing} placeholder="What's happening?" />
-      <button>Post</button>
+      <textarea
+        onChange={(e) => {
+          handleResizing(e);
+          setContent(e.target.value);
+        }}
+        value={content}
+        placeholder="What's happening?"
+      />
+      <button onClick={handlePostSubmit}>Post</button>
+      {postError && <p style={{ color: "red" }}>{postError}</p>}
     </div>
   );
 }
