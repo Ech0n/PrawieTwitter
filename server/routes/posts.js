@@ -22,6 +22,8 @@ router.get('/', postsController.getAllPosts);
 // specific post routes
 router.get('/:postID', validateID, postsController.getPost);
 
+router.get('/owner/:ownerID', validateID, postsController.getAllPostsOfOwner);
+
 router.post('/', validateOwnerID, uploadPhoto.single('photo'), postsController.createPost);
 
 router.delete('/:postID', validateID, postsController.deletePost);

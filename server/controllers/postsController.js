@@ -27,6 +27,30 @@ const getAllPosts = async (req, res) => {
     }
 };
 
+const getAllPostsOfOwner = async (req, res) => {
+    try {
+        const owner_id = req.params.ownerID;
+
+        if (owner_id) {
+            const posts = await db.Post.findAll({
+                where: { owner_id: owner_id }
+            });
+
+            if (!posts) {
+                return res.status(404).json({ error: 'No posts found' });
+            }
+
+            return res.status(200).json(posts);
+        } else {
+            const posts = await db.Post.findAll();
+            return res.status(200).json({ posts });
+        }
+    } catch (error) {
+        return res.status(500).json({ error: error.message });
+    }
+};
+
+
 const getPost = async (req, res, sortOption) => {
     try {
         const postId = req.params.postID;
@@ -136,4 +160,4 @@ const updatePost = async (req, res) => {
     }
 }
 
-module.exports = {getAllPosts, getPost, createPost, deletePost, updatePost};
+module.exports = {getAllPosts, getAllPostsOfOwner, getPost, createPost, deletePost, updatePost};
