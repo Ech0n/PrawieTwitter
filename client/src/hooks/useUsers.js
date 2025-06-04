@@ -24,8 +24,9 @@ export default function useUsers() {
 
     return data;
     
-
   };
+
+  
 
   const getTopUsers = (username) => {
     if (!users) return [];

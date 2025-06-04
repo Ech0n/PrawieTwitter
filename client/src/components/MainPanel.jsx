@@ -25,12 +25,7 @@ function Post() {
   );
 }
 
-function likeThePost(){
-  // TODO zrobić wysłanie polubienia do bazy
-  // TODO dodać możliwość usunięcia polubienia
-}
-
-function CommentsSection({postId}){
+function CommentsSection({postId, onCommentCount}){
     const [comments, setComments] = useState([])
     const [error, setError] = useState("");
     const [loading, setLoading] = useState(true);
@@ -41,6 +36,7 @@ function CommentsSection({postId}){
                 if (response.ok){
                     const data = await response.json();
                     setComments(data);
+                    onCommentCount?.(data.length);
                 } else {
                     setError("Couldn't get comments.")
                 }
@@ -81,9 +77,30 @@ function CommentsSection({postId}){
 
 export function Note({ note }) {
   const [showComments, setShowComments] = useState(false);
+  const [postLikes, setPostLikes] = useState(0);
+  const [likesError, setLikesError] = useState("");
+  const [commentsCount, setCommentsCount] = useState(-1);
+  const [isPostLiked, setIsPostLiked] = useState(false)
   function toggleComments(){
     setShowComments(prev => !prev);
   }
+  function toggleLikeThePost(){
+    // TODO zrobić wysłanie polubienia do bazy
+    
+    setIsPostLiked(prev => !prev);
+  }
+
+  useEffect(() => {
+      (async () => {
+          try {
+              const res = await fetch(`http://lokalhost:3000/post_likes/${note.id}`);
+              const data = await res.json();
+              setPostLikes(data.likes)
+          } catch(e){
+              setLikesError(e.error)
+          }
+      })();
+  }, [postLikes]);
 
   return (
     <div className="note">
@@ -95,10 +112,10 @@ export function Note({ note }) {
       <div className="note-content">{note.content}</div>
       <div className="note-bottom-part">
         <button onClick={toggleComments} className="post-icons"><img className="post-icons" src={CommentIcon} alt="comment icon"/></button>
-        <span>2</span>  {/* TODO podpiąć realną liczbę */}
-        <button onClick={likeThePost} className="post-icons"><img className="post-icons" src={HeartIcon} alt={"Heart shaped like icon"}/></button>
-        {/* TODO zrobić, żeby się zmieniła ikonka serduszka na pełne serce (zaimportowane jako FullHeartIcon jest), jeśli aktualny użytkownik polubił post */}
-        {showComments && <CommentsSection key={note.id} postId={note.id} />}
+        <span>{commentsCount===-1 ?"Unknown" : commentsCount}</span>
+        <button onClick={toggleLikeThePost} className="post-icons"><img className="post-icons" src={isPostLiked ? FullHeartIcon : HeartIcon} alt={"Heart shaped like icon"}/></button>
+        <span>{likesError==="" ? postLikes : "Unknown"}</span>
+        {showComments && <CommentsSection key={note.id} postId={note.id} onCommentCount={(count) => setCommentsCount(count)}/>}
       </div>
 
     </div>

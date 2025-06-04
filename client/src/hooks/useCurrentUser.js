@@ -17,8 +17,8 @@ export function useCurrentUser() {
     return data.user;
   };
 
-  const getFollowers = async (userId) => {
-    const response = await fetch(`http://localhost:3000/followers/${userId}`, {
+  const getFollowing = async (userId) => {
+    const response = await fetch(`http://localhost:3000/followers/following/${userId}`, {
       method: "GET",
       headers: {
         "Content-Type": "application/json",
@@ -32,8 +32,52 @@ export function useCurrentUser() {
       throw new Error(data.error || "Login failed");
     }
 
-    return data.followers;
+    return data.following;
   };
 
-  return { getUserData, getFollowers};
+  const follow = async (id) => {
+    let res = await fetch(`http://localhost:3000/followers/${id}`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        
+      },
+      credentials: "include",
+    });
+
+    const data = await res.json();
+
+    if(res.ok){
+      return "OK";
+    }
+    else{
+      throw new Error(data.error || "could not follow "); 
+    }
+    
+  }
+
+  const unfollow = async (id) => {
+    let res = await fetch(`http://localhost:3000/followers/${id}`, {
+      method: "DELETE",
+      headers: {
+        "Content-Type": "application/json",
+        
+      },
+      credentials: "include",
+    });
+
+    const data = await res.json();
+
+    if(res.ok){
+      return "OK";
+    }
+    else{
+      throw new Error(data.error || "could not unfollow "); 
+    }
+    
+  }
+
+
+  return { getUserData, getFollowing, follow, unfollow};
 }
+

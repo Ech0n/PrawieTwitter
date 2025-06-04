@@ -10,7 +10,6 @@ function UserSettings() {
     const [email, setEmail] = useState('');
     const [nickname, setNickname] = useState('');
     const [name, setName] = useState('');
-    const [lastName, setLastName] = useState('');
     const [description, setDescription] = useState('');
 
     useEffect(() => {
@@ -19,7 +18,6 @@ function UserSettings() {
             setEmail(data.email ?? '')
             setNickname(data.username ?? '')
             setName(data.name ?? '')
-            setLastName(data.surname ?? '')
             setDescription(data.description ?? '')
         }).catch(err => {
             console.log("Error while getting user data: "+err)
@@ -33,7 +31,6 @@ function UserSettings() {
             headers: { "Content-Type": "application/json"},
             body: JSON.stringify({
                 "name": name,
-                "surname": lastName,
                 "description": description,
                 "username": nickname
             })
@@ -79,10 +76,6 @@ function UserSettings() {
                 <div>
                     <label>name</label>
                     <input type="text" value={name} onChange={e => setName(e.target.value)}/>
-                </div>
-                <div>
-                    <label>lastName</label>
-                    <input type="text" value={lastName} onChange={e => setLastName(e.target.value)}/>
                 </div>
                 <div>
                     <label>description</label>
