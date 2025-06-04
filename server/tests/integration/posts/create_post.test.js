@@ -21,7 +21,7 @@ describe('POST /posts', () => {
     createdUser = await db.User.create({
       username: user.username,
       email: user.email,
-      password_hash: PasswordManager.hash(user.password),
+      password_hash: await PasswordManager.hash(user.password),
     });
 
     agent = request.agent(app);

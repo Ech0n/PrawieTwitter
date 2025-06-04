@@ -12,7 +12,7 @@ describe('GET /users', () => {
     testUser = await db.User.create({
       username: 'getalluser',
       email: 'getall@example.com',
-      password_hash: PasswordManager.hash('SomePass123'),
+      password_hash: await PasswordManager.hash('SomePass123'),
     });
   });
 

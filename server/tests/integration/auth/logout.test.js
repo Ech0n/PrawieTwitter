@@ -18,7 +18,7 @@ describe('POST /auth/logout', () => {
     await db.User.create({
       username: testUser.username,
       email: testUser.email,
-      password_hash: PasswordManager.hash(testUser.password),
+      password_hash: await PasswordManager.hash(testUser.password),
     });
 
     const loginRes = await request(app).post('/auth/login').send({

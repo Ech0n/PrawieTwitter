@@ -17,7 +17,7 @@ describe('POST /auth/login', () => {
     await db.User.create({
       username: testUser.username,
       email: testUser.email,
-      password_hash: PasswordManager.hash(testUser.password),
+      password_hash: await PasswordManager.hash(testUser.password),
     });
   });
 
