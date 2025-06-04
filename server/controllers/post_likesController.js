@@ -33,11 +33,6 @@ const likeUnlikePost = async (req, res) => {
         if (existingLike) {
             await existingLike.destroy();
 
-            await db.Post.increment(
-                { likes_count: -1 },
-                { where: { id: post_id } }
-            );
-
             return res.status(200).json({ message: "Post unliked" });
         }
 
@@ -45,11 +40,6 @@ const likeUnlikePost = async (req, res) => {
             user_id,
             post_id
         });
-
-        await db.Post.increment(
-            { likes_count: 1 },
-            { where: { id: post_id } }
-        );
 
         return res.status(201).json({ message: 'Post liked', newLike });
     } catch (error) {

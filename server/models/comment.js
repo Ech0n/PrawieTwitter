@@ -17,10 +17,6 @@ const Comment = sequelize.define(
             type: DataTypes.TEXT,
             allowNull: false
         },
-        likes_count: {              // wartosc aktualizowana przy dodawaniu i usuwaniu like'ow
-            type: DataTypes.INTEGER,
-            defaultValue: 0
-        }
     },
     {
         tableName: 'Comments',

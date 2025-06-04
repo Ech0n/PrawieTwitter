@@ -22,4 +22,16 @@ const PostLikes = sequelize.define(
     },
 );
 
+PostLikes.associate = (models) => {
+    PostLikes.belongsTo(models.User, {
+      foreignKey: 'user_id',
+      onDelete: 'CASCADE',
+    });
+
+    PostLikes.belongsTo(models.Post, {
+      foreignKey: 'post_id',
+      onDelete: 'CASCADE',
+    });
+  };
+
 module.exports = PostLikes;

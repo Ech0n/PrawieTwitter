@@ -17,10 +17,6 @@ const Post = sequelize.define(
         photo_path: {
             type: DataTypes.STRING,
             allowNull: true,
-        },
-        likes_count: {              // wartosc aktualizowana przy dodawaniu i usuwaniu like'ow
-            type: DataTypes.INTEGER,
-            defaultValue: 0
         }
     },{
         tableName: 'Posts',
@@ -32,7 +28,6 @@ const Post = sequelize.define(
 
 Post.associate = (models) => {
     Post.belongsTo(models.User, { foreignKey: "owner_id" });
-    Post.hasMany(models.Report, { foreignKey: "post_id" });
     Post.hasMany(models.Comment, { foreignKey: "post_id" });
 };
 

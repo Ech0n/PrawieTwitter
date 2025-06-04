@@ -30,11 +30,6 @@ const likeUnlikeComment = async (req, res) => {
         if (existingLike) {
             await existingLike.destroy();
 
-            await db.Comment.increment(
-                { likes_count: -1 },
-                { where: { id: comment_id } }
-            );
-
             return res.status(200).json({ message: "Comment unliked" });
         }
 
@@ -42,11 +37,6 @@ const likeUnlikeComment = async (req, res) => {
             user_id,
             comment_id
         });
-
-        await db.Comment.increment(
-            { likes_count: 1 },
-            { where: { id: comment_id } }
-        );
 
         return res.status(201).json({ message: 'Comment liked', newLike });
     } catch (error) {
