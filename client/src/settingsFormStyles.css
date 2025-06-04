@@ -6,7 +6,7 @@
     padding: 30px;
     border-radius: 16px;
     margin: 1rem;
-    width: 680px;
+    width: 40vw;
 }
 
 .settings h1 {
@@ -25,7 +25,7 @@
 .settings input[type="password"],
 .settings textarea,
 .settings select {
-    width: 654px;
+    width: 90%;
     padding: 10px;
     margin-bottom: 15px;
     border: 3px solid #555;
