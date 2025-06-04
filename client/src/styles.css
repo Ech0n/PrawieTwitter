@@ -22,7 +22,7 @@
   margin: 0 auto;
 }
 #sidebar {
-  padding: 10px;
+  padding: 2rem;
   border-style: solid;
   height: max-content;
   width: 10%;
@@ -171,4 +171,8 @@
 
 #main-panel{
   width: 70%;
+}
+
+#link:hover{
+  opacity: 0.75;
 }

@@ -9,13 +9,16 @@ export default function useUsers() {
       headers: {
         "Content-Type": "application/json",
       },
-    }).then((res) => res.json().then((data) => setUsers(data)));
+    }).then((res) => res.json().then((data) => setUsers(data.users)));
   }, []);
 
 
   const getTopUsers = (username)=>{
-    
-  };
+    if(!users) return [];
+    let topUsers = users.slice(0,5);
+    return topUsers;
+
+};
 
   return {users, getTopUsers};
 }

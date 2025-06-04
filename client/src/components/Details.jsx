@@ -11,9 +11,17 @@ function Details() {
 
   const buttonStyle = {
     border: "1px solid white",
-    margin: "1rem",
+    margin: "1rem auto",
     width: "100px",
-    height: "75px"
+    height: "50px",
+    boxSizing: "border-box",
+    padding: "0",
+  };
+
+  const aStyle = {
+    display: "flex",
+    alignItems: "center",
+    justifyContent: "center",
   };
 
   useEffect(() => {
@@ -41,15 +49,17 @@ function Details() {
   if (error) {
     return (
       <div
-        style={{ height: "100vh", textAlign: "center", padding: "1rem" }}
+        style={{ height: "100vh", textAlign: "center", padding: "1rem", display: "flex", flexDirection: "column" }}
         id="details-box"
       >
         <p>You're not signed in</p>
         <button id="sign-in-button" style={buttonStyle}>
-          <a href="/login">Sign in</a>
+          <a style={aStyle} href="/login">
+            Sign in
+          </a>
         </button>
         <button id="sign-up-button" style={buttonStyle}>
-          <a href="/register">Sign up</a>
+          <a style={aStyle} href="/register">Sign up</a>
         </button>
       </div>
     );
@@ -66,7 +76,7 @@ function Details() {
               window.location.reload();
             });
           }}
-          style={{...buttonStyle, padding:"1rem" }}
+          style={{ ...buttonStyle }}
         >
           Logout
         </button>
