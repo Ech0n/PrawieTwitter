@@ -43,7 +43,7 @@ export function Search() {
           <div key={"user" + index} style={{ backgroundColor: "transparent" }}>
             <Link
               id="link"
-              to="/user/:id"
+              to={`/user/${user.id}`}
               style={{
                 backgroundColor: "transparent",
                 padding: "1rem",

@@ -20,6 +20,7 @@
   display: flex;
   max-width: 1200px;
   margin: 0 auto;
+  justify-content: center;
 }
 #sidebar {
   padding: 2rem;
@@ -175,4 +176,8 @@
 
 #link:hover{
   opacity: 0.75;
+}
+
+button:hover{
+  cursor: pointer;
 }

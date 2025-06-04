@@ -12,13 +12,26 @@ export default function useUsers() {
     }).then((res) => res.json().then((data) => setUsers(data.users)));
   }, []);
 
+  const getUser = async (id) => {
+    let res = await fetch(`http://localhost:3000/users/${id}`, {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+      },
+    });
 
-  const getTopUsers = (username)=>{
-    if(!users) return [];
-    let topUsers = users.slice(0,5);
+    let data = await res.json();
+
+    return data;
+    
+
+  };
+
+  const getTopUsers = (username) => {
+    if (!users) return [];
+    let topUsers = users.slice(0, 5);
     return topUsers;
+  };
 
-};
-
-  return {users, getTopUsers};
+  return { users, getTopUsers, getUser };
 }
