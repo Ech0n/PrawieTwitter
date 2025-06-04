@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import useUsers from "../hooks/useUsers";
 import { useCurrentUser } from "../hooks/useCurrentUser";
+import usePosts from "../hooks/usePosts";
 
 export default function UserPanel() {
   const { id } = useParams();
@@ -9,10 +10,12 @@ export default function UserPanel() {
   const [user, setUser] = useState(null);
   const [loggedUser, setLoggedUser] = useState(null);
   const { getUserData, getFollowing, follow, unfollow } = useCurrentUser();
+  const {getPostsByUser} = usePosts();
   const [followMessage, setFollowMessage] = useState("");
   const [isFollowed, setIsFollowed] = useState(false);
   const [error, setError] = useState(null);
   const [followCount, setFollowCount] = useState(0);
+  const [posts, setPosts] = useState();
 
   useEffect(() => {
     getUser(id).then((res) => {
@@ -29,9 +32,11 @@ export default function UserPanel() {
         else setIsFollowed(false);
       }
       );
+      getPostsByUser(id).then((res)=>{
+        setPosts(res);
+        console.log(res);
+      })
     });
-    
-
 
   }, [user]);
 
