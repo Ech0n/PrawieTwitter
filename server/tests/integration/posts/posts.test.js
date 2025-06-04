@@ -21,7 +21,7 @@ describe('GET /posts and /posts/:postID', () => {
     createdUser = await db.User.create({
       username: user.username,
       email: user.email,
-      password_hash: PasswordManager.hash(user.password),
+      password_hash: await PasswordManager.hash(user.password),
     });
 
     testPost = await db.Post.create({

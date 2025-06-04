@@ -12,7 +12,7 @@ describe('DELETE /users/:id', () => {
     testUser = await db.User.create({
       username: 'deleteuser',
       email: 'deleteuser@example.com',
-      password_hash: PasswordManager.hash('DeletePass123'),
+      password_hash: await PasswordManager.hash('DeletePass123'),
     });
   });
 

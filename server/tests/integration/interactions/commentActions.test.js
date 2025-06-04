@@ -1,7 +1,9 @@
+import express from 'express';
+import bodyParser from 'body-parser';
 import request from 'supertest';
-import app from '../../../app';
 import db from '../../../models';
 import PasswordManager from '../../../auth/passwordManager';
+import commentRouter from '../../../routes/comments';
 import { describe, it, expect, beforeAll, afterAll } from 'vitest';
 
 describe('Comment actions (GET, PUT, DELETE)', () => {
@@ -11,7 +13,7 @@ describe('Comment actions (GET, PUT, DELETE)', () => {
     password: 'EditPass123',
   };
 
-  let agent;
+  let isolatedApp;
   let createdUser;
   let testPost;
   let testComment;
@@ -24,7 +26,7 @@ describe('Comment actions (GET, PUT, DELETE)', () => {
     createdUser = await db.User.create({
       username: user.username,
       email: user.email,
-      password_hash: PasswordManager.hash(user.password),
+      password_hash: await PasswordManager.hash(user.password),
     });
 
     testPost = await db.Post.create({
@@ -38,10 +40,13 @@ describe('Comment actions (GET, PUT, DELETE)', () => {
       content: 'Original content',
     });
 
-    agent = request.agent(app);
-    await agent
-      .post('/auth/login')
-      .send({ email: user.email, password: user.password });
+    isolatedApp = express();
+    isolatedApp.use(bodyParser.json());
+    isolatedApp.use((req, res, next) => {
+      req.user = { id: createdUser.id };
+      next();
+    });
+    isolatedApp.use('/comments', commentRouter);
   });
 
   afterAll(async () => {
@@ -51,7 +56,7 @@ describe('Comment actions (GET, PUT, DELETE)', () => {
   });
 
   it('should return comments for a post', async () => {
-    const res = await request(app)
+    const res = await request(isolatedApp)
       .get(`/comments/${testPost.id}`)
       .expect(200);
 
@@ -60,7 +65,7 @@ describe('Comment actions (GET, PUT, DELETE)', () => {
   });
 
   it('should update a comment', async () => {
-    const res = await agent
+    const res = await request(isolatedApp)
       .put(`/comments/${testComment.id}`)
       .send({ content: 'Updated comment content' })
       .expect(200);
@@ -70,14 +75,14 @@ describe('Comment actions (GET, PUT, DELETE)', () => {
     expect(res.body.owner_id).toBe(createdUser.id);
   });
 
-    it('should delete a comment', async () => {
+  it('should delete a comment', async () => {
     const newComment = await db.Comment.create({
       owner_id: createdUser.id,
       post_id: testPost.id,
       content: 'To be deleted',
     });
 
-    const res = await agent
+    const res = await request(isolatedApp)
       .delete(`/comments/${newComment.id}`)
       .expect(200);
 
@@ -86,5 +91,4 @@ describe('Comment actions (GET, PUT, DELETE)', () => {
     const deleted = await db.Comment.findByPk(newComment.id);
     expect(deleted).toBeNull();
   });
-
 });

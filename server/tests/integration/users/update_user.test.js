@@ -12,7 +12,7 @@ describe('PUT /users/:id', () => {
     testUser = await db.User.create({
       username: 'updateuser',
       email: 'updateuser@example.com',
-      password_hash: PasswordManager.hash('PassToUpdate123'),
+      password_hash: await PasswordManager.hash('PassToUpdate123'),
     });
   });
 
