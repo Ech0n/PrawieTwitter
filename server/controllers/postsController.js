@@ -39,7 +39,7 @@ const getPost = async (req, res, sortOption) => {
             return res.status(200).json({message: "Post with selected id not found"});
         }
 
-        return res.status(200).json(postData);
+        return res.status(200).json(existingPost);
     }catch (error){
         return res.status(500).json({ error: error.message });
     }
