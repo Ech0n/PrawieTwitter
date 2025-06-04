@@ -3,7 +3,7 @@ import { useLogin } from "../hooks/useLogin";
 import { useCurrentUser } from "../hooks/useCurrentUser";
 
 function Details() {
-  const { getUserData, getFollowers } = useCurrentUser();
+  const { getUserData, getFollowing } = useCurrentUser();
   const [user, setUser] = useState();
   const [followers, setFollowers] = useState();
   const { logout } = useLogin();
@@ -28,7 +28,7 @@ function Details() {
     getUserData()
       .then((data) => {
         setUser(data);
-        return getFollowers(data.id);
+        return getFollowing(data.id);
       })
       .then((data) => {
         setFollowers(data);

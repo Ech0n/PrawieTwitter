@@ -8,22 +8,32 @@ export default function UserPanel() {
   const { getUser } = useUsers();
   const [user, setUser] = useState(null);
   const [loggedUser, setLoggedUser] = useState(null);
-  const {getUserData, getFollowers} = useCurrentUser();
+  const { getUserData, getFollowing, follow, unfollow } = useCurrentUser();
   const [followMessage, setFollowMessage] = useState("");
   const [isFollowed, setIsFollowed] = useState(false);
+  const [error, setError] = useState(null);
+  const [followCount, setFollowCount] = useState(0);
 
   useEffect(() => {
     getUser(id).then((res) => {
       setUser(res);
     });
-  }, []);
+  }, [isFollowed]);
 
   useEffect(() => {
     getUserData().then((res) => {
       setLoggedUser(res);
-      getFollowers(res.id).then((followers)=>setIsFollowed(followers.some((user)=>user.id===id)));
+      getFollowing(res.id).then((following) =>{
+        setFollowCount(following.length);
+        if(following.includes(user?.username)) setIsFollowed(true);
+        else setIsFollowed(false);
+      }
+      );
     });
-  },[]);
+    
+
+
+  }, [user]);
 
   return (
     <div
@@ -46,7 +56,7 @@ export default function UserPanel() {
       >
         <div>
           <p>Followers</p>
-          <p>{user?.followers_count}</p>
+          <p>{followCount }</p>
         </div>
         <div>
           <p>Following</p>
@@ -57,23 +67,41 @@ export default function UserPanel() {
           <p>{user?.notes_count}</p>
         </div>
       </div>
-      { loggedUser?.id != id ?
-      <div>
-        <button style={{
-            padding: "1rem",
-            border: "solid white"
-        }} onClick={()=>{
-            if(!loggedUser){
-                setFollowMessage("You have to sign in to follow!")
-            }
+      {loggedUser?.id != id ? (
+        <div>
+          <button
+            style={{
+              padding: "1rem",
+              border: "solid white",
+            }}
+            onClick={() => {
+              if (!loggedUser) {
+                setFollowMessage("You have to sign in to follow!");
+              } else if(!isFollowed) {
 
+                follow(id).then(()=>setIsFollowed(true)).catch((err) => {
+                  setError(err);
+                  console.log(err);
+                  
+                });
+              }
+              else{
+                unfollow(id).then(()=>setIsFollowed(false)).catch((err)=>{
+                  setError(err);
+                  console.log(err);
+                  setIsFollowed(false);
+                })
+              }
+            }}
+          >
+            {isFollowed ? "Unfollow" : "Follow"}
+          </button>
+          <p style={{ color: "#d99b9a", padding: "1rem" }}>{error?.message || followMessage}</p>
 
-
-
-        }} >{isFollowed ? "Unfollow" : "Follow"}</button>
-        <p style={{color: "#d99b9a", padding: "1rem"}}>{followMessage}</p>
-      </div> : ""
-    } 
+        </div>
+      ) : (
+        ""
+      )}
     </div>
   );
 }
