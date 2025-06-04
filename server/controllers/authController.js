@@ -31,4 +31,9 @@ const logout = (req, res) => {
     });
 }
 
-module.exports = {login, logout};
+const getCurrentUser = async (req, res) => {
+    const currentUser = ( req.user ) ? req.user : null;
+    return res.status(200).json({ user: currentUser });
+}
+
+module.exports = {login, logout, getCurrentUser};

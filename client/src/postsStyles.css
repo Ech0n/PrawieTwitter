@@ -9,8 +9,8 @@ h1 {
     border: 2px solid #555;
     padding: 30px 20px;
     border-radius: 16px;
-    width: 680px;
-    margin: 5px;
+    width: 40vw;
+    margin: 0 1rem ;
 }
 
 .post {

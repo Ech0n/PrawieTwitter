@@ -19,7 +19,7 @@ const register = async (req, res) => {
         if (existingUser){
             return res.status(400).json({message: "username already in use"});
         }
-        const hashedPassword = PasswordManager.hash(password);
+        const hashedPassword = await PasswordManager.hash(password);
 
         await db.User.create(
             {username, email, password_hash: hashedPassword });

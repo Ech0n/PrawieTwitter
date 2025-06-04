@@ -30,6 +30,15 @@
         - mandatory fields:
             - email
             - password
+#### Logout
+- Logout
+    - **\[POST\] /auth/logout**
+
+#### Current User
+- Current User
+    - **\[GET\] /auth/current-user**
+        - returns user: data, null otherwise
+
 
 #### Posts
 - Get all posts

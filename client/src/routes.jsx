@@ -7,6 +7,7 @@ import DashboardLayout from "./components/DashbordLayout.jsx";
 import MainPanel from "./components/MainPanel.jsx";
 import Register from "./components/Register.jsx";
 import Posts from "./components/Posts.jsx";
+import UserPanel from "./components/UserPanel.jsx";
 
 export default function AppRoutes() {
   return (
@@ -15,6 +16,7 @@ export default function AppRoutes() {
         <Route path="/" element={<MainPanel />}/>
         <Route path="/userSettings" element={<UserSettings />} />
         <Route path="/posts" element={<Posts />} />
+        <Route path="/user/:id" element={<UserPanel />} />
       </Route>
       <Route path="/login" element={<Login />} />
       <Route path="/register" element={<Register />} />

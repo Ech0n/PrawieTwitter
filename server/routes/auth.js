@@ -14,8 +14,10 @@ const validateEmail = [
     }
 ];
 
-router.post("/login", validateEmail, authController.login);
+router.post('/login', validateEmail, authController.login);
 
-router.post("/logout", authController.logout);
+router.post('/logout', authController.logout);
+
+router.get('/current-user', authController.getCurrentUser);
 
 module.exports = router;

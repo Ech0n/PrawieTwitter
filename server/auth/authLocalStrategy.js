@@ -14,11 +14,12 @@ const createStrategy = () => {
                     where: { email: email }
                 });
 
-                if (!user || !PasswordManager.compare(password, user.password_hash))
+                if (!user || !await PasswordManager.compare(password, user.password_hash))
                     return done(null, false, { error: 'Bad Credentials' });
 
                 // If everything is good, return user
-                return done(null, user);
+                const { password_hash, ...safeUser } = user.get({ plain: true });
+                return done(null, safeUser);
             } catch (err) {
                 return done(err, null);
             }
@@ -35,9 +36,13 @@ const serializeUser = () =>  {
 const deserializeUser = () => {
     return (async (id, done) => {
         try {
-            const user = await db.User.findByPk(id);
+            const user = await db.User.findByPk(id, {
+                attributes: { exclude: ['password_hash'] }
+            });
             if (!user) return done(null, false, { message: 'User does not exist' });
-            done(null, user);
+
+            const safeUser = user.get({ plain: true });
+            done(null, safeUser);
         } catch (err) {
             done(err, null);
         }
