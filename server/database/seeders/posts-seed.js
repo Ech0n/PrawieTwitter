@@ -1,6 +1,7 @@
 'use strict';
 
 const  Post  = require('../../models/post');
+const path = require('path');
 
 async function seedPosts() {
     const postsData = [
@@ -27,6 +28,7 @@ async function seedPosts() {
 
     const postsToInsert = postsData.map(post => ({
         ...post,
+        photo_path: post.photo_path ? path.resolve(__dirname, '..', '..', post.photo_path) : null,
         createdAt: new Date(),
     }));
 

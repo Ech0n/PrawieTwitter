@@ -42,7 +42,7 @@ if (!process.env.VITEST) {
 }
 
 // Synchronization
-sequelize.sync({force: true })
+sequelize.sync({force: false })
     .then(async () => {
         await seedUsers();
         await seedPosts();
