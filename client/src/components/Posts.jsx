@@ -1,13 +1,19 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import "../postsStyles.css"
-import {Note} from "./MainPanel.jsx";
+
+import usePosts from '../hooks/usePosts.js';
+import { Notes } from './Notes.jsx';
 
 function Posts() {
-    // TODO zamiast przykładowych postów pobrać prawdziwe danego użytkownika
+    const {getPosts} = usePosts();
+    const [posts, setPosts] = useState(null);
+    useEffect(()=>{
+        getPosts().then((data)=>console.log(data)).catch((err)=>console.log(err));
+    },[])
     const dummyNotes = [
         {
             id: 1,
-            name: "User 0",
+            name: "User 1",
             username: "@user0",
             creationTime: "2024-01-01 14:15",
             content:
@@ -35,9 +41,7 @@ function Posts() {
         <div>
             <div className="postsContainer">
                 <h1>My posts</h1>
-                {dummyNotes.map((note) => (
-                    <Note key={note.id} note={note} />
-                ))}
+                <Notes />
             </div>
         </div>
     )
