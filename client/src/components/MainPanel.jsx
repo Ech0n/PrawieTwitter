@@ -8,7 +8,8 @@ import usePosts from '../hooks/usePosts.js';
 function Post() {
   const [content, setContent] = useState("");
   const [ownerId, setOwnerId] = useState(null);
-  const [postError, setPostError] = useState("");
+  const [postSubmitError, setPostSubmitError] = useState(""); // Renamed from postError
+  const [isLoadingUser, setIsLoadingUser] = useState(true);
   const { getUserData } = useCurrentUser();
 
   useEffect(() => {
@@ -16,12 +17,14 @@ function Post() {
       .then((user) => {
         if (user && user.id) {
           setOwnerId(user.id);
-        } else {
-          setPostError("You must be logged in to post.");
         }
+        // If user or user.id is null/undefined, ownerId remains null
       })
       .catch(() => {
-        setPostError("Could not fetch user data. Please log in.");
+        // Error fetching user, ownerId remains null
+      })
+      .finally(() => {
+        setIsLoadingUser(false);
       });
   }, [getUserData]);
 
@@ -47,7 +50,7 @@ function Post() {
       return;
     }
 
-    setPostError(""); 
+    setPostSubmitError("");
 
     try {
       const response = await fetch("http://localhost:3000/posts", {
@@ -65,18 +68,26 @@ function Post() {
       const responseData = await response.json();
 
       if (response.ok) {
-        alert("Post created successfully!");
-        setContent(""); 
+        setContent("");
         // Optionally, trigger a refresh of the posts list here
       } else {
-        alert(`Failed to create post: ${responseData.message || responseData.error || "Unknown error"}`);
-        setPostError(responseData.message || responseData.error || "Unknown error");
+        const errorMsg = responseData.message || responseData.error || "Unknown error";
+        alert(`Failed to create post: ${errorMsg}`);
+        setPostSubmitError(errorMsg);
       }
     } catch (error) {
       alert(`Error creating post: ${error.message}`);
-      setPostError(error.message);
+      setPostSubmitError(error.message);
     }
   };
+
+  if (isLoadingUser) {
+    return null; // Or a loading spinner
+  }
+
+  if (!ownerId) {
+    return null; // Don't render the component if user is not logged in
+  }
 
   return (
     <div id="post-box">
@@ -89,7 +100,7 @@ function Post() {
         placeholder="What's happening?"
       />
       <button onClick={handlePostSubmit}>Post</button>
-      {postError && <p style={{ color: "red" }}>{postError}</p>}
+      {postSubmitError && <p style={{ color: "red" }}>{postSubmitError}</p>}
     </div>
   );
 }
