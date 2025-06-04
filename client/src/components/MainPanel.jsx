@@ -3,7 +3,7 @@ import React, {useEffect, useState} from "react";
 import { Search } from "./Search";
 import { Notes } from "./Notes";
 import { useCurrentUser } from "../hooks/useCurrentUser.js";
-
+import usePosts from '../hooks/usePosts.js';  
 
 function Post() {
   const [content, setContent] = useState("");
@@ -146,14 +146,28 @@ export function CommentsSection({postId, onCommentCount}){
 
 
 function MainPanel() {
+  const { getPosts } = usePosts();
+  const [notes, setNotes] = useState(null);
+  useEffect(() => {
+    getPosts()
+      .then((data) => {
+        setNotes(data);
+        console.log(data);
+      })
+      .catch((err) => console.log(err));
+  }, []);
+
   return (
-    <div id="main-panel" style={{
-      padding: "1rem",
-      paddingTop: "0"
-    }} >
+    <div
+      id="main-panel"
+      style={{
+        padding: "1rem",
+        paddingTop: "0",
+      }}
+    >
       <Search />
       <Post />
-      <Notes />
+      <Notes notes={notes} />
     </div>
   );
 }

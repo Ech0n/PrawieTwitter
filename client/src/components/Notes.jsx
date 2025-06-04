@@ -2,8 +2,7 @@ import React,{ useEffect, useState } from "react";
 import CommentIcon from "../icons/chat-box.png";
 import HeartIcon from "../icons/heart.png"
 import FullHeartIcon from "../icons/full-heart.png"
-import {CommentsSection} from "./MainPanel.jsx";
-
+import { CommentsSection } from "./MainPanel";
 
 export function Note({ note }) {
   const [showComments, setShowComments] = useState(false);
@@ -35,9 +34,8 @@ export function Note({ note }) {
   return (
     <div className="note">
       <div className="note-header">
-        <span className="note-name">{note.name}</span>
         <span className="note-metadata">{note.username}</span>
-        <span className="note-metadata">{note.creationTime}</span>
+        <span className="note-metadata">{note.createdAt.split("T")[0]}</span>
       </div>
       <div className="note-content">{note.content}</div>
       <div className="note-bottom-part">
@@ -52,37 +50,12 @@ export function Note({ note }) {
   );
 }
 
-export function Notes() {
-  const dummyNotes = [
-    {
-      id: 1,
-      name: "User 0",
-      username: "@user0",
-      creationTime: "2024-01-01 14:15",
-      content:
-        "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
-    },
-    {
-      id: 2,
-      name: "User 0",
-      username: "@user0",
-      creationTime: "2024-01-01 14:15",
-      content:
-        "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
-    },
-    {
-      id: 3,
-      name: "User 0",
-      username: "@user0",
-      creationTime: "2024-01-01 14:15",
-      content:
-        "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
-    },
-  ];
+export function Notes({notes}) {
+
 
   return (
     <div id="notes-box">
-      {dummyNotes.map((note) => (
+      {notes?.map((note) => (
         <Note key={note.id} note={note} />
       ))}
     </div>
