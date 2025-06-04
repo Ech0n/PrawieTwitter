@@ -24,7 +24,7 @@ function Post() {
   );
 }
 
-function CommentsSection({postId, onCommentCount}){
+export function CommentsSection({postId, onCommentCount}){
     const [comments, setComments] = useState([])
     const [error, setError] = useState("");
     const [loading, setLoading] = useState(true);
@@ -55,7 +55,7 @@ function CommentsSection({postId, onCommentCount}){
     }
 
     return(
-        <div id="notes-box">
+        <div key={postId} id="notes-box">
             <div className="comments-header-section">
                 <h1 className="comments-header-text">Komentarze</h1>
             </div>

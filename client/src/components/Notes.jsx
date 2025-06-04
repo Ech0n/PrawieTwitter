@@ -2,6 +2,8 @@ import React,{ useEffect, useState } from "react";
 import CommentIcon from "../icons/chat-box.png";
 import HeartIcon from "../icons/heart.png"
 import FullHeartIcon from "../icons/full-heart.png"
+import {CommentsSection} from "./MainPanel.jsx";
+
 
 export function Note({ note }) {
   const [showComments, setShowComments] = useState(false);
