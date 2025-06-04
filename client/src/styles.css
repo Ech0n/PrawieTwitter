@@ -23,9 +23,9 @@
 }
 #sidebar {
   padding: 10px;
-  margin: 5px;
   border-style: solid;
   height: max-content;
+  width: 10%;
 }
 .logo {
   width: 80px;
@@ -41,12 +41,10 @@
 }
 #post-box, #search-box {
   border-style: solid;
-  margin: 5px;
+
   padding: 10px;
 }
-#search-box {
-  margin-bottom: 20px;
-}
+
 #post-box textarea, #search-box textarea {
   width: 100%;
   border-radius: 0;
@@ -68,7 +66,6 @@
 }
 #notes-box {
   padding: 10px;
-  margin: 5px;
   margin-top: 20px;
   border-style: solid;
 }
@@ -92,7 +89,6 @@
 #details-box {
   width: 30%;
   padding: 10px;
-  margin: 5px;
   border-style: solid;
   height: max-content;
 }
@@ -171,4 +167,8 @@
   height: 100%;
   text-decoration: none;
   line-height: 75px;
+}
+
+#main-panel{
+  width: 70%;
 }

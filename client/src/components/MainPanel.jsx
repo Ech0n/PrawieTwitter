@@ -2,20 +2,8 @@ import React, {useState} from "react";
 import CommentIcon from "../icons/chat-box.png";
 import HeartIcon from "../icons/heart.png"
 import FullHeartIcon from "../icons/full-heart.png"
+import { Search } from "./Search";
 
-function Search() {
-  function handleSearch(e) {
-    if (e.key === "Enter") {
-      console.log(e.target.value);
-      e.target.value = "";
-    }
-  }
-  return (
-    <div id="search-box">
-      <textarea onKeyDown={handleSearch} rows="1" placeholder="Search" />
-    </div>
-  );
-}
 
 function Post() {
   function handelResizing(e) {
@@ -133,7 +121,10 @@ function Notes() {
 
 function MainPanel() {
   return (
-    <div id="main-panel">
+    <div id="main-panel" style={{
+      padding: "1rem",
+      paddingTop: "0"
+    }} >
       <Search />
       <Post />
       <Notes />
