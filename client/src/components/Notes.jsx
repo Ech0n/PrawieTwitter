@@ -293,7 +293,7 @@ export function Note({ note }) {
       </div>
       <div className="note-content">{note.content}</div>
       {note.photo_path && (
-        /* <img className="note-image" src={note.photo_path}/> */
+        /* <img className="note-image" style={{ maxWidth: "800px", marginTop: "1rem" }} src={note.photo_path} alt="real Post Image"/> */
         <img
           className="note-image"
           style={{ maxWidth: "800px", marginTop: "1rem" }}
