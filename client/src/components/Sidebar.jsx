@@ -29,7 +29,11 @@ function Sidebar() {
             </Link>
           </li>
         ) : (
-          ""
+          <li>
+            <Link to="/login" className="link">
+              Sign in
+            </Link>
+          </li>
         )}
         {user ? (
           <li>
@@ -38,7 +42,11 @@ function Sidebar() {
             </Link>
           </li>
         ) : (
-          ""
+          <li>
+            <Link to="/register" className="link">
+              Sign up
+            </Link>
+          </li>
         )}
         {user ? (
           <li className="link"

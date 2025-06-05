@@ -45,22 +45,7 @@ function Details() {
   };
 
   if (error) {
-    return (
-      <div
-        style={{ height: "100vh", textAlign: "center", padding: "1rem", display: "flex", flexDirection: "column" }}
-        id="details-box"
-      >
-        <p>You're not signed in</p>
-        <button id="sign-in-button" style={buttonStyle}>
-          <a style={aStyle} href="/login">
-            Sign in
-          </a>
-        </button>
-        <button id="sign-up-button" style={buttonStyle}>
-          <a style={aStyle} href="/register">Sign up</a>
-        </button>
-      </div>
-    );
+    return ("");
   }
 
   return (
@@ -93,9 +78,6 @@ function Details() {
             <p>You don't have any followers</p>
           )}
         </ul>
-      </div>
-      <div id="calendar-details-box">
-        <h3>Activity (calendar like on GitHub)</h3>
       </div>
     </div>
   );
