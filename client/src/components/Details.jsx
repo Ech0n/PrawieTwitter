@@ -1,38 +1,28 @@
 import React, { useEffect, useState } from "react";
 import { useCurrentUser } from "../hooks/useCurrentUser";
+import useUsers from "../hooks/useUsers";
 
 function Details() {
   const { getUserData, getFollowing } = useCurrentUser();
+  const { getUserFollowing, getUserFollowers } = useUsers();
   const [user, setUser] = useState();
   const [followers, setFollowers] = useState();
+  const [followings, setFollowings] = useState();
   const [error, setError] = useState(false);
-
-  const buttonStyle = {
-    border: "1px solid white",
-    margin: "1rem auto",
-    width: "100px",
-    height: "50px",
-    boxSizing: "border-box",
-    padding: "0",
-  };
-
-  const aStyle = {
-    display: "flex",
-    alignItems: "center",
-    justifyContent: "center",
-  };
 
   useEffect(() => {
     getUserData()
       .then((data) => {
         setUser(data);
-        return getFollowing(data.id);
       })
-      .then((data) => {
-        setFollowers(data);
-      })
+
       .catch((err) => setError(true));
   }, []);
+
+  useEffect(() => {
+    getUserFollowers(user?.id).then((number) => setFollowers(number));
+    getUserFollowing(user?.id).then((number) => setFollowings(number));
+  }, [user]);
 
   const details = {
     Name: user?.name,
@@ -45,7 +35,7 @@ function Details() {
   };
 
   if (error) {
-    return ("");
+    return "";
   }
 
   return (
@@ -62,23 +52,7 @@ function Details() {
           ))}
         </ul>
       </div>
-      <div id="followers-details-box">
-        <h3>Followers</h3>
-        <ul>
-          {followers && followers.length > 0 ? (
-            followers.map((follower, index) => (
-              <li key={index}>
-                <span className="details-topic">{follower.topic}: </span>
-                <span className="details-sections">
-                  {follower.followers} Followers
-                </span>
-              </li>
-            ))
-          ) : (
-            <p>You don't have any followers</p>
-          )}
-        </ul>
-      </div>
+     
     </div>
   );
 }
