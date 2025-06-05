@@ -4,7 +4,27 @@ import HeartIcon from "../icons/heart.png"
 import FullHeartIcon from "../icons/full-heart.png"
 import { useCurrentUser } from "../hooks/useCurrentUser.js";
 
-function CommentsSection({postId, onCommentCount}){
+
+export function Note({ note }) {
+  const [showComments, setShowComments] = useState(false);
+  const [postLikes, setPostLikes] = useState(0);
+  const [likesError, setLikesError] = useState("");
+  const [commentsCount, setCommentsCount] = useState(-1);
+  const [isPostLiked, setIsPostLiked] = useState(false)
+  const [user, setUser] = useState(null);
+  const { getUserData: getCurrentUserData } = useCurrentUser();
+
+  useEffect(() => {
+    getCurrentUserData()
+      .then((currentUser) => {
+        setUser(currentUser);
+      })
+      .catch(() => {
+        setUser(null); 
+      });
+  }, []);
+
+  function CommentsSection({postId, onCommentCount}){
     const [comments, setComments] = useState([])
     const [error, setError] = useState("");
     const [loading, setLoading] = useState(true);
@@ -17,9 +37,10 @@ function CommentsSection({postId, onCommentCount}){
 
     useEffect(() => {
         getUserData()
-            .then((user) => {
-                if (user && user.id) {
-                    setCommentOwnerId(user.id);
+            .then((_user) => {
+                setUser(_user);
+                if (_user && _user.id) {
+                    setCommentOwnerId(_user.id);
                 }
             })
             .catch(() => {})
@@ -135,24 +156,20 @@ function CommentsSection({postId, onCommentCount}){
                 )))
             )}
 
-        </div>
-    );
-}
+          </div>
+      );
+  }
 
-
-export function Note({ note }) {
-  const [showComments, setShowComments] = useState(false);
-  const [postLikes, setPostLikes] = useState(0);
-  const [likesError, setLikesError] = useState("");
-  const [commentsCount, setCommentsCount] = useState(-1);
-  const [isPostLiked, setIsPostLiked] = useState(false)
   function toggleComments(){
     setShowComments(prev => !prev);
   }
   function toggleLikeThePost(){
-    // TODO zrobić wysłanie polubienia do bazy
-    
-    setIsPostLiked(prev => !prev);
+    console.log("Toggle like for post with user:", user);
+    if (user != null) {
+      // TODO zrobić wysłanie polubienia do bazy
+      
+      setIsPostLiked(prev => !prev);
+    }
   }
 
   useEffect(() => {
