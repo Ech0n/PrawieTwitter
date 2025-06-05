@@ -48,15 +48,21 @@ app.use(passport.session({}));
 // Route do statycznych plikow z folderu public
 // W wersji produkcyjnej z buildowane pliki client trafiaja do folderu public
 app.use(express.static(path.join(__dirname, 'public')));
+if (process.env.NODE_ENV === 'production') {
+    console.log("production mode is on")
+    app.get('*', (req, res) => {
+        res.sendFile(path.join(__dirname, 'public', 'index.html'));
+    });
+}
 
-app.use('/users', usersRouter);
-app.use('/register', registerRouter);
-app.use('/auth', authRouter);
-app.use('/posts', postsRouter);
-app.use('/comments', commentsRouter);
-app.use('/followers', followersRouter);
-app.use('/post_likes', postLikesRouter);
-app.use('/comment_likes', commentLikesRouter);
+app.use('/api/users', usersRouter);
+app.use('/api/register', registerRouter);
+app.use('/api/auth', authRouter);
+app.use('/api/posts', postsRouter);
+app.use('/api/comments', commentsRouter);
+app.use('/api/followers', followersRouter);
+app.use('/api/post_likes', postLikesRouter);
+app.use('/api/comment_likes', commentLikesRouter);
 
 
 module.exports = app;

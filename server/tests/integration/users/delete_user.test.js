@@ -4,7 +4,7 @@ import db from '../../../models';
 import PasswordManager from '../../../auth/passwordManager';
 import { describe, it, beforeAll, afterAll, expect } from 'vitest';
 
-describe('DELETE /users/:id', () => {
+describe('DELETE /api/users/:id', () => {
   let testUser;
 
   beforeAll(async () => {
@@ -18,7 +18,7 @@ describe('DELETE /users/:id', () => {
 
   it('should delete the user and return success message', async () => {
     const res = await request(app)
-      .delete(`/users/${testUser.id}`)
+      .delete(`/api/users/${testUser.id}`)
       .expect(200);
 
     expect(res.body.message).toBe('Successfully deleted User');
@@ -29,7 +29,7 @@ describe('DELETE /users/:id', () => {
 
   it('should return message when trying to delete non-existent user', async () => {
     const res = await request(app)
-      .delete(`/users/999999`)
+      .delete(`/api/users/999999`)
       .expect(200);
 
     expect(res.body.message).toBe('User with selected id not found');

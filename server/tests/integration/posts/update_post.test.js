@@ -3,7 +3,7 @@ import { describe, it, expect, beforeAll } from 'vitest';
 import app from '../../../app';
 import db from '../../../models';
 
-describe('PUT /posts/:postID', () => {
+describe('PUT /api/posts/:postID', () => {
   let createdPost;
   let testUser;
 
@@ -22,7 +22,7 @@ describe('PUT /posts/:postID', () => {
 
   it('should update the post content if post exists', async () => {
     const response = await request(app)
-      .put(`/posts/${createdPost.id}`)
+      .put(`/api/posts/${createdPost.id}`)
       .send({
         content: 'Updated content',
       });
@@ -33,7 +33,7 @@ describe('PUT /posts/:postID', () => {
 
   it('should return 404 if the post does not exist', async () => {
     const response = await request(app)
-      .put('/posts/999999')
+      .put('/api/posts/999999')
       .send({
         content: 'Should not work',
       });

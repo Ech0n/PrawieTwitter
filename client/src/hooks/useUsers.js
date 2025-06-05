@@ -4,7 +4,7 @@ export default function useUsers() {
   const [users, setUsers] = useState(null);
 
   useEffect(() => {
-    fetch("http://localhost:3000/users", {
+    fetch("http://localhost:3000/api/users", {
       method: "GET",
       headers: {
         "Content-Type": "application/json",
@@ -13,7 +13,7 @@ export default function useUsers() {
   }, []);
 
   const getUser = async (id) => {
-    let res = await fetch(`http://localhost:3000/users/${id}`, {
+    let res = await fetch(`http://localhost:3000/api/users/${id}`, {
       method: "GET",
       headers: {
         "Content-Type": "application/json",
@@ -27,7 +27,7 @@ export default function useUsers() {
   
   const getUserFollowers = async (id)=>{
     if(!id) return 0;
-    let res = await fetch(`http://localhost:3000/followers/${id}`, {
+    let res = await fetch(`http://localhost:3000/api/followers/${id}`, {
       method: "GET",
       headers: {
         "Content-Type": "application/json",
@@ -41,7 +41,7 @@ export default function useUsers() {
 
   const getUserFollowing = async (id) => {
     if (!id) return 0;
-    let res = await fetch(`http://localhost:3000/followers/following/${id}`, {
+    let res = await fetch(`http://localhost:3000/api/followers/following/${id}`, {
       method: "GET",
       headers: {
         "Content-Type": "application/json",

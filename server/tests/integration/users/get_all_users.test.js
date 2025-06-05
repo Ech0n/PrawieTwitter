@@ -4,7 +4,7 @@ import db from '../../../models';
 import PasswordManager from '../../../auth/passwordManager';
 import { describe, it, expect, beforeAll, afterAll } from 'vitest';
 
-describe('GET /users', () => {
+describe('GET /api/users', () => {
   let testUser;
 
   beforeAll(async () => {
@@ -21,7 +21,7 @@ describe('GET /users', () => {
   });
 
   it('should return a list of users including the test user', async () => {
-    const res = await request(app).get('/users').expect(200);
+    const res = await request(app).get('/api/users').expect(200);
 
     expect(Array.isArray(res.body.users)).toBe(true);
     expect(res.body.users.some(u => u.email === testUser.email)).toBe(true);

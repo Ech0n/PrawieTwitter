@@ -4,7 +4,7 @@ import db from '../../../models';
 import PasswordManager from '../../../auth/passwordManager';
 import { describe, it, beforeAll, afterAll, expect } from 'vitest';
 
-describe('GET /comments/:postID', () => {
+describe('GET /api/comments/:postID', () => {
   const user = {
     email: 'nowak@example.com',
     username: 'nowak',
@@ -58,7 +58,7 @@ describe('GET /comments/:postID', () => {
   });
 
   it('should return all comments for a given post', async () => {
-    const res = await agent.get(`/comments/${testPost.id}`).expect(200);
+    const res = await agent.get(`/api/comments/${testPost.id}`).expect(200);
 
     expect(Array.isArray(res.body)).toBe(true);
     expect(res.body.length).toBe(2);
@@ -73,7 +73,7 @@ describe('GET /comments/:postID', () => {
       content: 'Pusty post',
     });
 
-    const res = await agent.get(`/comments/${newPost.id}`).expect(200);
+    const res = await agent.get(`/api/comments/${newPost.id}`).expect(200);
 
     expect(Array.isArray(res.body)).toBe(true);
     expect(res.body.length).toBe(0);
@@ -82,7 +82,7 @@ describe('GET /comments/:postID', () => {
   });
 
   it('should return 200 for post with no auth required', async () => {
-    const res = await request(app).get(`/comments/${testPost.id}`).expect(200);
+    const res = await request(app).get(`/api/comments/${testPost.id}`).expect(200);
     expect(Array.isArray(res.body)).toBe(true);
   });
 });

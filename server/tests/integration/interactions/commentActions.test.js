@@ -46,7 +46,7 @@ describe('Comment actions (GET, PUT, DELETE)', () => {
       req.user = { id: createdUser.id };
       next();
     });
-    isolatedApp.use('/comments', commentRouter);
+    isolatedApp.use('/api/comments', commentRouter);
   });
 
   afterAll(async () => {
@@ -57,7 +57,7 @@ describe('Comment actions (GET, PUT, DELETE)', () => {
 
   it('should return comments for a post', async () => {
     const res = await request(isolatedApp)
-      .get(`/comments/${testPost.id}`)
+      .get(`/api/comments/${testPost.id}`)
       .expect(200);
 
     expect(Array.isArray(res.body)).toBe(true);
@@ -66,7 +66,7 @@ describe('Comment actions (GET, PUT, DELETE)', () => {
 
   it('should update a comment', async () => {
     const res = await request(isolatedApp)
-      .put(`/comments/${testComment.id}`)
+      .put(`/api/comments/${testComment.id}`)
       .send({ content: 'Updated comment content' })
       .expect(200);
 
@@ -83,7 +83,7 @@ describe('Comment actions (GET, PUT, DELETE)', () => {
     });
 
     const res = await request(isolatedApp)
-      .delete(`/comments/${newComment.id}`)
+      .delete(`/api/comments/${newComment.id}`)
       .expect(200);
 
     expect(res.body).toEqual({ message: 'Successfully deleted Comment' });

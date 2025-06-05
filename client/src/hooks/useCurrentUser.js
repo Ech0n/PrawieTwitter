@@ -1,6 +1,6 @@
 export function useCurrentUser() {
   const getUserData = async () => {
-    const response = await fetch("http://localhost:3000/auth/current-user", {
+    const response = await fetch("http://localhost:3000/api/auth/current-user", {
       method: "GET",
       headers: {
         "Content-Type": "application/json",
@@ -18,7 +18,7 @@ export function useCurrentUser() {
   };
 
   const getFollowing = async (userId) => {
-    const response = await fetch(`http://localhost:3000/followers/following/${userId}`, {
+    const response = await fetch(`http://localhost:3000/api/followers/following/${userId}`, {
       method: "GET",
       headers: {
         "Content-Type": "application/json",
@@ -36,7 +36,7 @@ export function useCurrentUser() {
   };
 
   const follow = async (id) => {
-    let res = await fetch(`http://localhost:3000/followers/${id}`, {
+    let res = await fetch(`http://localhost:3000/api/followers/${id}`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -57,7 +57,7 @@ export function useCurrentUser() {
   }
 
   const unfollow = async (id) => {
-    let res = await fetch(`http://localhost:3000/followers/${id}`, {
+    let res = await fetch(`http://localhost:3000/api/followers/${id}`, {
       method: "DELETE",
       headers: {
         "Content-Type": "application/json",

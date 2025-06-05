@@ -1,10 +1,10 @@
 import request from 'supertest';
 import app from '../../../app';
 import db from '../../../models';
-import PasswordManager from '../../../auth/passwordManager';
+import PasswordManager from '../../../api/auth/passwordManager';
 import { describe, it, beforeAll, afterAll, expect } from 'vitest';
 
-describe('POST /auth/logout', () => {
+describe('POST /api/auth/logout', () => {
   const testUser = {
     email: 'logouttest@example.com',
     username: 'logoutuser',
@@ -21,7 +21,7 @@ describe('POST /auth/logout', () => {
       password_hash: await PasswordManager.hash(testUser.password),
     });
 
-    const loginRes = await request(app).post('/auth/login').send({
+    const loginRes = await request(app).post('/api/auth/login').send({
       email: testUser.email,
       password: testUser.password,
     });
@@ -35,7 +35,7 @@ describe('POST /auth/logout', () => {
 
   it('should log out successfully', async () => {
     const res = await request(app)
-      .post('/auth/logout')
+      .post('/api/auth/logout')
       .set('Cookie', cookie)
       .expect(200);
 
@@ -44,7 +44,7 @@ describe('POST /auth/logout', () => {
 
   it('should return 401 when logging out again', async () => {
     const res = await request(app)
-      .post('/auth/logout')
+      .post('/api/auth/logout')
       .set('Cookie', cookie)
       .expect(401);
   });

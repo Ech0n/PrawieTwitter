@@ -4,7 +4,7 @@ import db from '../../../models';
 import PasswordManager from '../../../auth/passwordManager';
 import { describe, it, beforeAll, afterAll, expect } from 'vitest';
 
-describe('POST /posts', () => {
+describe('POST /api/posts', () => {
   const user = {
     email: 'nowakpost@example.com',
     username: 'nowakpost',
@@ -38,7 +38,7 @@ describe('POST /posts', () => {
 
   it('should create a post', async () => {
     const res = await agent
-      .post('/posts')
+      .post('/api/posts')
       .send({
         owner_id: createdUser.id,
         content: 'Nowy post testowy',

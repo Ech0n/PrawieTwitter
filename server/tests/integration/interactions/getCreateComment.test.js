@@ -3,7 +3,7 @@ const request = require('supertest');
 const baseApp = require('../../../app');
 const db = require('../../../models');
 
-describe('POST and GET /comments/:postID', () => {
+describe('POST and GET /api/comments/:postID', () => {
   let createdUser;
   let testPost;
   let commentText = "testowy komentarz";
@@ -39,7 +39,7 @@ describe('POST and GET /comments/:postID', () => {
 
   it('should create a comment on the post', async () => {
     const res = await request(testApp)
-      .post(`/comments/${testPost.id}`)
+      .post(`/api/comments/${testPost.id}`)
       .send({ content: commentText });
 
     expect(res.statusCode).toBe(201);
@@ -52,7 +52,7 @@ describe('POST and GET /comments/:postID', () => {
 
   it('should fetch all comments for the post', async () => {
     const res = await request(testApp)
-      .get(`/comments/${testPost.id}`);
+      .get(`/api/comments/${testPost.id}`);
 
     expect(res.statusCode).toBe(200);
     expect(Array.isArray(res.body)).toBe(true);

@@ -4,7 +4,7 @@ import db from '../../../models';
 import PasswordManager from '../../../auth/passwordManager';
 import { describe, it, expect, beforeAll, afterAll } from 'vitest';
 
-describe('GET /users/:id', () => {
+describe('GET /api/users/:id', () => {
   let testUser;
 
   beforeAll(async () => {
@@ -33,7 +33,7 @@ describe('GET /users/:id', () => {
   });
 
   it('should return message when user not found', async () => {
-    const res = await request(app).get('/users/999999').expect(200);
+    const res = await request(app).get('/api/users/999999').expect(200);
 
     expect(res.body).toEqual({
       message: 'User with selected id not found',

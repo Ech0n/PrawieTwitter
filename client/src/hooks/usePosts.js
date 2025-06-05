@@ -2,7 +2,7 @@ import React from "react";
 
 export default function usePosts() {
   const getPosts = async () => {
-    const response = await fetch("http://localhost:3000/posts", {
+    const response = await fetch("http://localhost:3000/api/posts", {
       method: "GET",
       headers: {
         "Content-Type": "application/json",
@@ -20,7 +20,7 @@ export default function usePosts() {
   const getPostsByUser = async (id) => {
     
 
-    const response = await fetch(`http://localhost:3000/posts/owner/${id}`, {
+    const response = await fetch(`http://localhost:3000/api/posts/owner/${id}`, {
       method: "GET",
   
       headers: {

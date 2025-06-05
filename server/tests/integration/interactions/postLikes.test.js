@@ -4,7 +4,7 @@ import db from '../../../models';
 import PasswordManager from '../../../auth/passwordManager';
 import { describe, it, beforeAll, afterAll, expect } from 'vitest';
 
-describe('POST and GET /post_likes/:postID', () => {
+describe('POST and GET /api/post_likes/:postID', () => {
   const user = {
     email: 'nowaklike@example.com',
     username: 'nowaklike',
@@ -46,7 +46,7 @@ describe('POST and GET /post_likes/:postID', () => {
 
   it('should like the post', async () => {
     const res = await agent
-      .post(`/post_likes/${testPost.id}`)
+      .post(`/api/post_likes/${testPost.id}`)
       .expect(201);
 
     expect(res.body).toHaveProperty('message', 'Post liked');
@@ -62,7 +62,7 @@ describe('POST and GET /post_likes/:postID', () => {
 
   it('should get post likes with count', async () => {
     const res = await request(app)
-      .get(`/post_likes/${testPost.id}`)
+      .get(`/api/post_likes/${testPost.id}`)
       .expect(200);
 
     expect(res.body).toHaveProperty('likes');

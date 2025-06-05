@@ -4,7 +4,7 @@ import db from '../../../models';
 import PasswordManager from '../../../auth/passwordManager';
 import { describe, it, beforeAll, afterAll, expect } from 'vitest';
 
-describe('GET /posts and /posts/:postID', () => {
+describe('GET /api/posts and /api/posts/:postID', () => {
   const user = {
     email: 'getposts@example.com',
     username: 'getposts',
@@ -36,7 +36,7 @@ describe('GET /posts and /posts/:postID', () => {
   });
 
   it('should return all posts', async () => {
-    const res = await request(app).get('/posts').expect(200);
+    const res = await request(app).get('/api/posts').expect(200);
 
     expect(res.body).toHaveProperty('posts');
     expect(Array.isArray(res.body.posts)).toBe(true);
@@ -46,7 +46,7 @@ describe('GET /posts and /posts/:postID', () => {
 
   it('should return a single post by ID', async () => {
     const res = await request(app)
-      .get(`/posts/${testPost.id}`)
+      .get(`/api/posts/${testPost.id}`)
       .expect(200);
 
     expect(res.body).toHaveProperty('id', testPost.id);
@@ -55,7 +55,7 @@ describe('GET /posts and /posts/:postID', () => {
 
   it('should return 400 for invalid ID', async () => {
     const res = await request(app)
-      .get('/posts/abc')
+      .get('/api/posts/abc')
       .expect(400);
 
     expect(res.body).toHaveProperty('errors');
@@ -63,7 +63,7 @@ describe('GET /posts and /posts/:postID', () => {
 
   it('should return message for non-existent post', async () => {
     const res = await request(app)
-      .get('/posts/999999')
+      .get('/api/posts/999999')
       .expect(200);
 
     expect(res.body).toHaveProperty('message', 'Post with selected id not found');

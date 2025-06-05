@@ -39,7 +39,7 @@ export function Note({ note }) {
   useEffect(() => {
     (async () => {
       try {
-        const response = await fetch(`http://localhost:3000/comments/${note.id}`);
+        const response = await fetch(`http://localhost:3000/api/comments/${note.id}`);
         if (response.ok) {
           const data = await response.json();
           setCommentsCount(data.length);
@@ -85,7 +85,7 @@ export function Note({ note }) {
             setLoading(true);
             setError("");
             try {
-                const response = await fetch(`http://localhost:3000/comments/${postId}`);
+                const response = await fetch(`http://localhost:3000/api/comments/${postId}`);
                 if (response.ok){
                     const data = await response.json();
                     if (!cancelled) setComments(data);
@@ -113,7 +113,7 @@ export function Note({ note }) {
         setCommentSubmitError("");
 
         try {
-            const response = await fetch(`http://localhost:3000/comments/${postId}`, {
+            const response = await fetch(`http://localhost:3000/api/comments/${postId}`, {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json",
@@ -219,7 +219,7 @@ export function Note({ note }) {
   useEffect(() => {
     const fetchLikes = async () => {
       try {
-        const res = await fetch(`http://localhost:3000/post_likes/${note.id}`);
+        const res = await fetch(`http://localhost:3000/api/post_likes/${note.id}`);
         const data = await res.json();
         setPostLikes(data.likes);
         
@@ -231,7 +231,7 @@ export function Note({ note }) {
     const checkLikeStatus = async () => {
         // if (user) {
         try {
-            const response = await fetch(`http://localhost:3000/post_likes/status/${note.id}`, {credentials: "include"});
+            const response = await fetch(`http://localhost:3000/api/post_likes/status/${note.id}`, {credentials: "include"});
             if (response.ok) {
                 const data = await response.json();
                 setIsPostLiked(data.isLiked);
@@ -255,7 +255,7 @@ export function Note({ note }) {
   const toggleLikeThePost = async () => {
     if (user != null) {
       try {
-        await fetch(`http://localhost:3000/post_likes/${note.id}`, {
+        await fetch(`http://localhost:3000/api/post_likes/${note.id}`, {
           method: "POST",
           credentials: "include",
         });
@@ -274,7 +274,7 @@ export function Note({ note }) {
   useEffect(() => {
       (async () => {
           try {
-              const res = await fetch(`http://localhost:3000/post_likes/${note.id}`);
+              const res = await fetch(`http://localhost:3000/api/post_likes/${note.id}`);
               const data = await res.json();
               setPostLikes(data.likes)
           } catch(e){

@@ -25,7 +25,7 @@ function UserSettings() {
     }, []);
 
     function handleSave(){
-        const url = `http://localhost:3000/users/${userId}`;
+        const url = `http://localhost:3000/api/users/${userId}`;
         const requestOptions = {
             method: "PUT",
             headers: { "Content-Type": "application/json"},

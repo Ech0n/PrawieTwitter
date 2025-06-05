@@ -17,7 +17,7 @@
 
 #### Register
 - Register user account
-    - **\[POST\] /register**
+    - **\[POST\] /api/register**
     - mandatory fields:
         - email
         - username
@@ -42,67 +42,67 @@
 
 #### Posts
 - Get all posts
-  - **\[GET\] /posts**
+  - **\[GET\] /api/posts**
 - Get all user posts
-  - **\[GET\] /posts**
+  - **\[GET\] /api/posts**
   - mandatory fields:
     - owner_id
 - Get a specific post
-    - **\[GET\] /posts/{id}**
+    - **\[GET\] /api/posts/{id}**
 - Create Post
-    - **\[POST\] /posts**
+    - **\[POST\] /api/posts**
         - mandatory fields:
             - owner_id
             - content
         - possible fields:
             - photo (image)
 - Update Post
-    - **\[PUT\] /posts/{id}**
+    - **\[PUT\] /api/posts/{id}**
         - possible fields:
             - content
             - photo (image)
 - Delete Post
-  - **\[DELETE\] /posts/{id}**
+  - **\[DELETE\] /api/posts/{id}**
 
 #### Comments
 - Get Comments for Post
-  - **\[GET\] /comments/{post_id{**
+  - **\[GET\] /api/comments/{post_id{**
 - Create a Comment
   - User needs to be Log In
-  - **\[POST\] /comments/{post_id}**
+  - **\[POST\] /api/comments/{post_id}**
     - mandatory fields:
       - content
 - Update Comment
-  - **\[PUT\] /comments/{comment_id}**
+  - **\[PUT\] /api/comments/{comment_id}**
       - mandatory fields:
         - content
 - Delete Comment
-  - **\[DELETE\] /comments/{comment_id}**
+  - **\[DELETE\] /api/comments/{comment_id}**
 
 #### Followers
 - Get Followers
-    - **\[GET\] /followers/{user_id}**
+    - **\[GET\] /api/followers/{user_id}**
 - Get Following users
-    - **\[GET\] /followers/following/{user_id}**
+    - **\[GET\] /api/followers/following/{user_id}**
 - Create Follow
   - User needs to be Log In
-  - **\[POST\] /followers/{user_id}**
+  - **\[POST\] /api/followers/{user_id}**
 - Delete Comment
   - User needs to be Log In
-  - **\[DELETE\] /followers/{user_id}**
+  - **\[DELETE\] /api/followers/{user_id}**
 
 #### CommentLikes
 - Get comment likes
-    - **\[GET\] /comment_likes/{comment_id}**
+    - **\[GET\] /api/comment_likes/{comment_id}**
 - Like comment
-    - **\[POST\] /comment_likes/{comment_id}**
+    - **\[POST\] /api/comment_likes/{comment_id}**
 - Dislike comment
-    - **\[POST\] /comment_likes/{comment_id}**
+    - **\[POST\] /api/comment_likes/{comment_id}**
 
 #### PostLikes
 - Get post likes
-    - **\[GET\] /post_likes/{post_id}**
+    - **\[GET\] /api/post_likes/{post_id}**
 - Like post
-    - **\[POST\] /post_likes/{post_id}**
+    - **\[POST\] /api/post_likes/{post_id}**
 - Dislike post
-    - **\[POST\] /post_likes/{post_id}**
+    - **\[POST\] /api/post_likes/{post_id}**

@@ -19,7 +19,7 @@ export function useLogin() {
   };
 
   const logout = async () => {
-    const response = await fetch("http://localhost:3000/auth/logout", {
+    const response = await fetch("http://localhost:3000/api/auth/logout", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -37,7 +37,7 @@ export function useLogin() {
 }
 
 const fetchLogin = async (email, password) => {
-  const response = await fetch("http://localhost:3000/auth/login", {
+  const response = await fetch("http://localhost:3000/api/auth/login", {
     method: "POST",
     headers: {
       "Content-Type": "application/json",

@@ -4,7 +4,7 @@ import db from '../../../models';
 import PasswordManager from '../../../auth/passwordManager';
 import { describe, it, beforeAll, afterAll, expect } from 'vitest';
 
-describe('POST /auth/login', () => {
+describe('POST /api/auth/login', () => {
   const testUser = {
     email: 'test@example.com',
     username: 'testuser',
@@ -32,7 +32,7 @@ describe('POST /auth/login', () => {
 
   it('should authenticate with valid credentials', async () => {
     const res = await request(app)
-      .post('/auth/login')
+      .post('/api/auth/login')
       .send({
         email: testUser.email,
         password: testUser.password,
@@ -45,7 +45,7 @@ describe('POST /auth/login', () => {
 
   it('should fail with wrong password', async () => {
     const res = await request(app)
-      .post('/auth/login')
+      .post('/api/auth/login')
       .send({
         email: testUser.email,
         password: 'WrongPassword!',
@@ -58,7 +58,7 @@ describe('POST /auth/login', () => {
 
   it('should fail if user not found', async () => {
     const res = await request(app)
-      .post('/auth/login')
+      .post('/api/auth/login')
       .send({
         email: 'nonexistent@example.com',
         password: 'Password123',

@@ -36,7 +36,7 @@ describe('Followers Endpoints (isolated)', () => {
     next();
   });
 
-  app.use('/followers', followersRouter);
+  app.use('/api/followers', followersRouter);
 });
 
 
@@ -44,32 +44,32 @@ describe('Followers Endpoints (isolated)', () => {
     await db.sequelize.close();
   });
 
-  it('POST /followers/:userID – should create a follow relationship', async () => {
+  it('POST /api/followers/:userID – should create a follow relationship', async () => {
     const res = await request(app)
-      .post(`/followers/${followingUser.id}`)
+      .post(`/api/followers/${followingUser.id}`)
       .set('user-id', followerUser.id.toString());
 
     expect(res.status).toBe(201);
     expect(res.body.message).toBe('Succesfully created folllow');
   });
 
-  it('GET /followers/:userID – should return list of followers', async () => {
-    const res = await request(app).get(`/followers/${followingUser.id}`);
+  it('GET /api/followers/:userID – should return list of followers', async () => {
+    const res = await request(app).get(`/api/followers/${followingUser.id}`);
 
     expect(res.status).toBe(200);
     expect(res.body.followers).toContain('follower');
   });
 
-  it('GET /followers/following/:userID – should return list of following', async () => {
-    const res = await request(app).get(`/followers/following/${followerUser.id}`);
+  it('GET /api/followers/following/:userID – should return list of following', async () => {
+    const res = await request(app).get(`/api/followers/following/${followerUser.id}`);
 
     expect(res.status).toBe(200);
     expect(res.body.following).toContain('following');
   });
 
-  it('DELETE /followers/:userID – should delete a follow relationship', async () => {
+  it('DELETE /api/followers/:userID – should delete a follow relationship', async () => {
     const res = await request(app)
-      .delete(`/followers/${followingUser.id}`)
+      .delete(`/api/followers/${followingUser.id}`)
       .set('user-id', followerUser.id.toString());
 
     expect(res.status).toBe(200);

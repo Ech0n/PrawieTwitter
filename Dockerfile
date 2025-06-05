@@ -12,6 +12,8 @@ WORKDIR /app
 COPY server/ /app/server/
 RUN cd server && npm ci
 
+ENV NODE_ENV=production
+
 RUN cp -r /app/client/dist/* /app/server/public
 
 EXPOSE 3000

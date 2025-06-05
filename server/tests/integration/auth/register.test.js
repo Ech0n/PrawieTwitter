@@ -3,7 +3,7 @@ import app from '../../../app';
 import db from '../../../models';
 import { describe, it, beforeEach, afterAll, expect } from 'vitest';
 
-describe('POST /register', () => {
+describe('POST /api/register', () => {
   const baseUser = {
     email: 'newuser@example.com',
     username: 'newuser123',
@@ -29,7 +29,7 @@ describe('POST /register', () => {
 
   it('should register a new user with valid data', async () => {
     const res = await request(app)
-      .post('/register')
+      .post('/api/register')
       .send(baseUser)
       .expect(201);
 
@@ -48,7 +48,7 @@ describe('POST /register', () => {
     });
 
     const res = await request(app)
-      .post('/register')
+      .post('/api/register')
       .send(baseUser)
       .expect(400);
 
@@ -63,7 +63,7 @@ describe('POST /register', () => {
     });
 
     const res = await request(app)
-      .post('/register')
+      .post('/api/register')
       .send(baseUser)
       .expect(400);
 
@@ -72,7 +72,7 @@ describe('POST /register', () => {
 
   it('should reject if passwords do not match', async () => {
     const res = await request(app)
-      .post('/register')
+      .post('/api/register')
       .send({ ...baseUser, password2: 'Mismatch123' })
       .expect(400);
 
@@ -81,7 +81,7 @@ describe('POST /register', () => {
 
   it('should reject if password is too weak', async () => {
     const res = await request(app)
-      .post('/register')
+      .post('/api/register')
       .send({ ...baseUser, password: '123', password2: '123' })
       .expect(400);
 

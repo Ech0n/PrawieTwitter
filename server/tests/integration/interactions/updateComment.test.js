@@ -4,7 +4,7 @@ import db from '../../../models';
 import PasswordManager from '../../../auth/passwordManager';
 import { describe, it, beforeAll, afterAll, expect } from 'vitest';
 
-describe('PUT /comments/:commentID', () => {
+describe('PUT /api/comments/:commentID', () => {
   const user = {
     email: 'nowak2@example.com',
     username: 'nowak2',
@@ -55,7 +55,7 @@ describe('PUT /comments/:commentID', () => {
     const updatedContent = 'Zmieniona treść komentarza';
 
     const res = await agent
-      .put(`/comments/${testComment.id}`)
+      .put(`/api/comments/${testComment.id}`)
       .send({ content: updatedContent })
       .expect(200);
 
@@ -71,7 +71,7 @@ describe('PUT /comments/:commentID', () => {
 
   it('should return 404 if comment does not exist', async () => {
     const res = await agent
-      .put('/comments/999999')
+      .put('/api/comments/999999')
       .send({ content: 'Nowa treść' })
       .expect(404);
 

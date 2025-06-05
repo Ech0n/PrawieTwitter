@@ -4,7 +4,7 @@ import db from '../../../models';
 import PasswordManager from '../../../auth/passwordManager';
 import { describe, it, expect, beforeAll, afterAll } from 'vitest';
 
-describe('POST /comments/:postID', () => {
+describe('POST /api/comments/:postID', () => {
   const user = {
     email: 'commenter@example.com',
     username: 'commentQueen',
@@ -46,7 +46,7 @@ describe('POST /comments/:postID', () => {
 
   it('should create a comment when user is logged in', async () => {
     const res = await agent
-      .post(`/comments/${testPost.id}`)
+      .post(`/api/comments/${testPost.id}`)
       .send({ content: 'This is a test comment' })
       .expect(201);
 
@@ -57,7 +57,7 @@ describe('POST /comments/:postID', () => {
 
   it('should return 401 if user is not logged in', async () => {
     const res = await request(app)
-      .post(`/comments/${testPost.id}`)
+      .post(`/api/comments/${testPost.id}`)
       .send({ content: 'This should fail' })
       .expect(401);
 
@@ -66,7 +66,7 @@ describe('POST /comments/:postID', () => {
 
   it('should return 404 if post does not exist', async () => {
     const res = await agent
-      .post('/comments/999999')
+      .post('/api/comments/999999')
       .send({ content: 'No such post' })
       .expect(404);
 

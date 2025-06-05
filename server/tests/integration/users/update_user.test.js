@@ -4,7 +4,7 @@ import db from '../../../models';
 import PasswordManager from '../../../auth/passwordManager';
 import { describe, it, beforeAll, afterAll, expect } from 'vitest';
 
-describe('PUT /users/:id', () => {
+describe('PUT /api/users/:id', () => {
   let testUser;
 
   beforeAll(async () => {
@@ -22,7 +22,7 @@ describe('PUT /users/:id', () => {
 
     it('should update the user and return updated data', async () => {
     const res = await request(app)
-      .put(`/users/${testUser.id}`)
+      .put(`/api/users/${testUser.id}`)
       .send({
         name: 'NoweImię',
         surname: 'NoweNazwisko',
@@ -40,7 +40,7 @@ describe('PUT /users/:id', () => {
 
   it('should return 404 for non-existent user ID', async () => {
     const res = await request(app)
-      .put('/users/999999')
+      .put('/api/users/999999')
       .send({ username: 'nieistniejacy' })
       .expect(404);
 

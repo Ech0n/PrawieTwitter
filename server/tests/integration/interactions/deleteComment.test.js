@@ -4,7 +4,7 @@ import db from '../../../models';
 import PasswordManager from '../../../auth/passwordManager';
 import { describe, it, beforeAll, afterAll, expect } from 'vitest';
 
-describe('DELETE /comments/:commentID', () => {
+describe('DELETE /api/comments/:commentID', () => {
   const user = {
     email: 'nowak@example.com',
     username: 'nowak',
@@ -53,7 +53,7 @@ describe('DELETE /comments/:commentID', () => {
 
   it('should delete a comment by ID', async () => {
     const res = await agent
-      .delete(`/comments/${testComment.id}`)
+      .delete(`/api/comments/${testComment.id}`)
       .expect(200);
 
     expect(res.body).toEqual({ message: 'Successfully deleted Comment' });
@@ -63,7 +63,7 @@ describe('DELETE /comments/:commentID', () => {
   });
 
   it('should return 404 if comment does not exist', async () => {
-    const res = await agent.delete('/comments/999999').expect(404);
+    const res = await agent.delete('/api/comments/999999').expect(404);
 
     expect(res.body).toEqual({
       message: 'Comment with selected id not found',

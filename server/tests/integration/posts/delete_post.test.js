@@ -4,7 +4,7 @@ import db from '../../../models';
 import PasswordManager from '../../../auth/passwordManager';
 import { describe, it, beforeAll, afterAll, expect } from 'vitest';
 
-describe('DELETE /posts/:postID', () => {
+describe('DELETE /api/posts/:postID', () => {
   const user = {
     email: 'kasia@example.com',
     username: 'kasia',
@@ -44,7 +44,7 @@ describe('DELETE /posts/:postID', () => {
 
   it('should delete a post', async () => {
     const res = await agent
-      .delete(`/posts/${testPost.id}`)
+      .delete(`/api/posts/${testPost.id}`)
       .expect(200);
 
     expect(res.body).toHaveProperty('message', 'Successfully deleted Post');
@@ -55,7 +55,7 @@ describe('DELETE /posts/:postID', () => {
 
   it('should return 400 for invalid postID', async () => {
     const res = await agent
-      .delete('/posts/invalid')
+      .delete('/api/posts/invalid')
       .expect(400);
 
     expect(res.body).toHaveProperty('errors');
@@ -63,7 +63,7 @@ describe('DELETE /posts/:postID', () => {
 
   it('should return 200 and message if post does not exist', async () => {
     const res = await agent
-      .delete('/posts/999999')
+      .delete('/api/posts/999999')
       .expect(200);
 
     expect(res.body).toHaveProperty('message', 'Post with selected id not found');

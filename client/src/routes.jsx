@@ -12,15 +12,13 @@ import UserPanel from "./components/UserPanel.jsx";
 export default function AppRoutes() {
   return (
     <Routes>
-      <Route element={<DashboardLayout />}>
         <Route path="/" element={<MainPanel />}/>
         <Route path="/userSettings" element={<UserSettings />} />
         <Route path="/posts" element={<Posts />} />
         <Route path="/user/:id" element={<UserPanel />} />
-      </Route>
-      <Route path="/login" element={<Login />} />
-      <Route path="/register" element={<Register />} />
-      <Route path="*" element={<NotFound />} />
+        <Route path="/login" element={<Login />} />
+        <Route path="/register" element={<Register />} />
+        <Route path="*" element={<NotFound />} />
     </Routes>
   );
 }
