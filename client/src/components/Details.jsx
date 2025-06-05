@@ -29,8 +29,8 @@ function Details() {
     Username: user?.username,
     Notes: user?.notes_count,
     Joined: user?.createdAt.slice(0, 10),
-    Followers: user?.followers_count,
-    Following: user?.following_count,
+    Followers: followers,
+    Following: followings,
     Description: user?.description,
   };
 
