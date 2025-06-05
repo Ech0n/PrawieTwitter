@@ -18,7 +18,7 @@
 }
 #app-container {
   display: flex;
-  max-width: 1200px;
+  max-width: 1100px;
   margin: 0 auto;
   justify-content: center;
 }
@@ -157,7 +157,7 @@
 }
 
 #main-panel{
-  width: 70%;
+  width: 60%;
 }
 
 #link:hover{
