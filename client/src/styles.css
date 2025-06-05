@@ -41,13 +41,12 @@
   font-size: 18px;
   list-style-type: none;
 }
-#post-box, #search-box {
+.post-box, #search-box {
   border-style: solid;
-
   padding: 10px;
 }
 
-#post-box textarea, #search-box textarea {
+.post-box textarea, #search-box textarea {
   width: 100%;
   border-radius: 0;
   border: none;
@@ -58,7 +57,7 @@
   overflow: hidden;
   white-space: nowrap;
 }
-#post-box button {
+.post-box button {
   margin-top: 10px;
   padding: 5px 10px;
   border-radius: 20px;
@@ -132,11 +131,6 @@
   align-items: center;
   margin: 10px 5px;
 
-}
-
-.comments-header-text {
-  font-size: 32px;
-  margin: 0;
 }
 
 .blue-button {

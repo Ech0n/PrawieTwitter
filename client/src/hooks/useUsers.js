@@ -26,6 +26,7 @@ export default function useUsers() {
   };
   
   const getUserFollowers = async (id)=>{
+    if(!id) return 0;
     let res = await fetch(`http://localhost:3000/followers/${id}`, {
       method: "GET",
       headers: {
@@ -39,6 +40,7 @@ export default function useUsers() {
   }
 
   const getUserFollowing = async (id) => {
+    if (!id) return 0;
     let res = await fetch(`http://localhost:3000/followers/following/${id}`, {
       method: "GET",
       headers: {
