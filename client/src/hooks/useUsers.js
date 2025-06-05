@@ -23,16 +23,38 @@ export default function useUsers() {
     let data = await res.json();
 
     return data;
-    
   };
 
-  
+ const getTopUsers = (username) => {
+  if (!users || !Array.isArray(users)) return [];
 
-  const getTopUsers = (username) => {
-    if (!users) return [];
-    let topUsers = users.slice(0, 5);
-    return topUsers;
-  };
+  const input = username.toLowerCase();
+
+  const scoredUsers = users.map(user => {
+    const name = user.username.toLowerCase();
+    let score = 0;
+
+    // +10 punktów jeśli input występuje gdziekolwiek w nazwie
+    if (name.includes(input)) score += 10;
+
+    // +1 punkt za każdy wspólny znak na początku
+    for (let i = 0; i < Math.min(name.length, input.length); i++) {
+      if (name[i] === input[i]) {
+        score += 1;
+      } else {
+        break;
+      }
+    }
+
+    return { user, score };
+  });
+
+  return scoredUsers
+    .sort((a, b) => b.score - a.score)
+    .slice(0, 5)
+    .map(entry => entry.user);
+};
+
 
   return { users, getTopUsers, getUser };
 }
