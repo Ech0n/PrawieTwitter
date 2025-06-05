@@ -2,6 +2,7 @@ import React,{ useEffect, useState } from "react";
 import CommentIcon from "../icons/chat-box.png";
 import HeartIcon from "../icons/heart.png"
 import FullHeartIcon from "../icons/full-heart.png"
+import { useCurrentUser } from "../hooks/useCurrentUser.js";
 
 function CommentsSection({postId, onCommentCount}){
     const [comments, setComments] = useState([])
