@@ -3,6 +3,7 @@ import CommentIcon from "../icons/chat-box.png";
 import HeartIcon from "../icons/heart.png"
 import FullHeartIcon from "../icons/full-heart.png"
 import { useCurrentUser } from "../hooks/useCurrentUser.js";
+import useUsers from "../hooks/useUsers.js"; // Add this import
 
 
 export function Note({ note }) {
@@ -12,7 +13,9 @@ export function Note({ note }) {
   const [commentsCount, setCommentsCount] = useState(-1);
   const [isPostLiked, setIsPostLiked] = useState(false)
   const [user, setUser] = useState(null);
+  const [author, setAuthor] = useState(null);
   const { getUserData: getCurrentUserData } = useCurrentUser();
+  const { getUser } = useUsers();
 
   useEffect(() => {
     getCurrentUserData()
@@ -22,6 +25,13 @@ export function Note({ note }) {
       .catch(() => {
         setUser(null); 
       });
+  }, []);
+
+  // Fetch post author
+  useEffect(() => {
+    if (note.owner_id) {
+      getUser(note.owner_id).then((user) => setAuthor(user));
+    }
   }, []);
 
   // Fetch comments count on mount
@@ -39,7 +49,7 @@ export function Note({ note }) {
         setCommentsCount(0);
       }
     })();
-  }, [note.id]);
+  }, []);
 
   function CommentsSection({postId, onCommentCount}){
     const [comments, setComments] = useState([])
@@ -51,6 +61,7 @@ export function Note({ note }) {
     const [commentSubmitError, setCommentSubmitError] = useState("");
     const [isCommenterLoading, setIsCommenterLoading] = useState(true);
     const { getUserData } = useCurrentUser();
+    const { getUser } = useUsers(); // Add this hook
 
     useEffect(() => {
         getUserData()
@@ -67,25 +78,28 @@ export function Note({ note }) {
     }, [getUserData]);
 
     useEffect(() => {
+        let cancelled = false;
+        if (isCommenterLoading) return;
+
         (async () => {
-            if (isCommenterLoading) return;
             setLoading(true);
             setError("");
             try {
                 const response = await fetch(`http://localhost:3000/comments/${postId}`);
                 if (response.ok){
                     const data = await response.json();
-                    setComments(data);
+                    if (!cancelled) setComments(data);
                 } else {
-                    setError("Couldn't get comments.")
+                    if (!cancelled) setError("Couldn't get comments.")
                 }
             } catch(e){
-                setError(e.message)
+                if (!cancelled) setError(e.message)
             } finally {
-                setLoading(false)
+                if (!cancelled) setLoading(false)
             }
         })();
-    }, [isCommenterLoading]);
+        return () => { cancelled = true; };
+    }, [isCommenterLoading, postId]);
 
     const handleCommentSubmit = async () => {
         if (!commentOwnerId) {
@@ -146,6 +160,31 @@ export function Note({ note }) {
       e.target.style.height = `${height}px`;
     }
 
+    // Helper to render a single comment with author and date
+    function CommentItem({ comment }) {
+      const [author, setAuthor] = useState(null);
+
+      useEffect(() => {
+        if (comment.owner_id) {
+          getUser(comment.owner_id).then((user) => setAuthor(user));
+        }
+      }, [comment.owner_id]);
+
+      return (
+        <div className="comment">
+          <div style={{ display: "flex", alignItems: "center", marginBottom: 4 }}>
+            <span style={{ fontWeight: "bold", marginRight: 10 }}>
+              {author?.username || "Unknown"}
+            </span>
+            <span style={{ color: "#888", fontSize: "0.9em" }}>
+              {comment.createdAt ? comment.createdAt.split("T")[0] : ""}
+            </span>
+          </div>
+          <p>{comment.content}</p>
+        </div>
+      );
+    }
+
     return(
         <div key={postId} id="notes-box" style={{marginTop: "1rem"}}>
             {!isCommenterLoading && commentOwnerId && (
@@ -163,17 +202,13 @@ export function Note({ note }) {
                 </div>
             )}
 
-            {comments.length === 0 ? (<p>No comments yet</p>) : (
-                comments.map((comment => (
-                    <div className="comment">
-                        <p>{comment.content}</p>
-                        {/* TODO można dodać autora postu, bo jest zwracane comment.owner_id   */}
-                        {/*  TODO jeszcze polubienia postów trzeba dodać - można użyć comment.likes_count */}
-                    </div>
-                ))))
-            }
+            {comments.length === 0 ? ("") : (
+                comments.map((comment, idx) => (
+                    <CommentItem key={idx} comment={comment} />
+                ))
+            )
 
-          </div>
+          }</div>
       );
   }
 
@@ -204,7 +239,9 @@ export function Note({ note }) {
   return (
     <div className="note">
       <div className="note-header">
-        <span className="note-metadata">{note.username}</span>
+        <span className="note-metadata" style={{ fontWeight: "bold" }}>
+          {author?.username || note.username || "Unknown"}
+        </span>
         <span className="note-metadata">{note.createdAt.split("T")[0]}</span>
       </div>
       <div className="note-content">{note.content}</div>
