@@ -24,6 +24,23 @@ export function Note({ note }) {
       });
   }, []);
 
+  // Fetch comments count on mount
+  useEffect(() => {
+    (async () => {
+      try {
+        const response = await fetch(`http://localhost:3000/comments/${note.id}`);
+        if (response.ok) {
+          const data = await response.json();
+          setCommentsCount(data.length);
+        } else {
+          setCommentsCount(0);
+        }
+      } catch {
+        setCommentsCount(0);
+      }
+    })();
+  }, [note.id]);
+
   function CommentsSection({postId, onCommentCount}){
     const [comments, setComments] = useState([])
     const [error, setError] = useState("");
@@ -38,7 +55,7 @@ export function Note({ note }) {
     useEffect(() => {
         getUserData()
             .then((_user) => {
-                setUser(_user);
+                // setUser(_user); // REMOVE THIS LINE to prevent infinite re-renders
                 if (_user && _user.id) {
                     setCommentOwnerId(_user.id);
                 }
@@ -51,6 +68,7 @@ export function Note({ note }) {
 
     useEffect(() => {
         (async () => {
+            if (isCommenterLoading) return;
             setLoading(true);
             setError("");
             try {
@@ -58,7 +76,6 @@ export function Note({ note }) {
                 if (response.ok){
                     const data = await response.json();
                     setComments(data);
-                    onCommentCount?.(data.length);
                 } else {
                     setError("Couldn't get comments.")
                 }
@@ -68,7 +85,7 @@ export function Note({ note }) {
                 setLoading(false)
             }
         })();
-    }, [postId, onCommentCount]);
+    }, [isCommenterLoading]);
 
     const handleCommentSubmit = async () => {
         if (!commentOwnerId) {
@@ -153,8 +170,8 @@ export function Note({ note }) {
                         {/* TODO można dodać autora postu, bo jest zwracane comment.owner_id   */}
                         {/*  TODO jeszcze polubienia postów trzeba dodać - można użyć comment.likes_count */}
                     </div>
-                )))
-            )}
+                ))))
+            }
 
           </div>
       );
