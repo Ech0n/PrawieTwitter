@@ -8,7 +8,7 @@ import usePosts from '../hooks/usePosts.js';
 function Post() {
   const [content, setContent] = useState("");
   const [ownerId, setOwnerId] = useState(null);
-  const [postSubmitError, setPostSubmitError] = useState(""); // Renamed from postError
+  const [postSubmitError, setPostSubmitError] = useState("");
   const [isLoadingUser, setIsLoadingUser] = useState(true);
   const { getUserData } = useCurrentUser();
 
@@ -18,11 +18,8 @@ function Post() {
         if (user && user.id) {
           setOwnerId(user.id);
         }
-        // If user or user.id is null/undefined, ownerId remains null
       })
-      .catch(() => {
-        // Error fetching user, ownerId remains null
-      })
+      .catch(() => {})
       .finally(() => {
         setIsLoadingUser(false);
       });
@@ -69,7 +66,6 @@ function Post() {
 
       if (response.ok) {
         setContent("");
-        // Optionally, trigger a refresh of the posts list here
       } else {
         const errorMsg = responseData.message || responseData.error || "Unknown error";
         alert(`Failed to create post: ${errorMsg}`);
@@ -82,11 +78,11 @@ function Post() {
   };
 
   if (isLoadingUser) {
-    return null; // Or a loading spinner
+    return null;
   }
 
   if (!ownerId) {
-    return null; // Don't render the component if user is not logged in
+    return null;
   }
 
   return (
@@ -123,9 +119,7 @@ export function CommentsSection({postId, onCommentCount}){
                     setCommentOwnerId(user.id);
                 }
             })
-            .catch(() => {
-                // Error fetching user, commentOwnerId remains null
-            })
+            .catch(() => {})
             .finally(() => {
                 setIsCommenterLoading(false);
             });
@@ -150,7 +144,7 @@ export function CommentsSection({postId, onCommentCount}){
                 setLoading(false)
             }
         })();
-    }, [postId, onCommentCount]); // Added onCommentCount to dependencies, though it might be stable
+    }, [postId, onCommentCount]);
 
     const handleCommentSubmit = async () => {
         if (!commentOwnerId) {
@@ -172,16 +166,11 @@ export function CommentsSection({postId, onCommentCount}){
                 credentials: "include",
                 body: JSON.stringify({
                     content: newCommentContent,
-                    // owner_id is handled by the backend based on the logged-in user
                 }),
             });
             const responseData = await response.json();
             if (response.ok) {
-                // Add the new comment to the list and update count
-                // The backend returns the created comment (owner_id, post_id, content)
-                // To display it immediately, we might need more info like username, or make assumptions
-                // For now, let's re-fetch or add it simply
-                const newComment = { ...responseData, owner_id: commentOwnerId }; // Assuming responseData has content and post_id
+                const newComment = { ...responseData, owner_id: commentOwnerId };
                 setComments(prevComments => [...prevComments, newComment]);
                 onCommentCount?.(comments.length + 1);
                 setNewCommentContent("");
@@ -218,7 +207,6 @@ export function CommentsSection({postId, onCommentCount}){
 
     return(
         <div key={postId} id="notes-box" style={{marginTop: "1rem"}}>
-            {/* add here functionality of adding comments */}
             {!isCommenterLoading && commentOwnerId && (
                 <div className="post-box">
                   <textarea
