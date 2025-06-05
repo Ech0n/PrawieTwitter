@@ -52,7 +52,7 @@ function Sidebar() {
           <li className="link"
             onClick={() => {
               logout().then(() => {
-                window.location.reload();
+                window.location.href = "/";
               });
             }}
           >

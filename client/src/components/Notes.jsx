@@ -61,12 +61,11 @@ export function Note({ note }) {
     const [commentSubmitError, setCommentSubmitError] = useState("");
     const [isCommenterLoading, setIsCommenterLoading] = useState(true);
     const { getUserData } = useCurrentUser();
-    const { getUser } = useUsers(); // Add this hook
+    const { getUser } = useUsers();
 
     useEffect(() => {
         getUserData()
             .then((_user) => {
-                // setUser(_user); // REMOVE THIS LINE to prevent infinite re-renders
                 if (_user && _user.id) {
                     setCommentOwnerId(_user.id);
                 }
@@ -215,14 +214,61 @@ export function Note({ note }) {
   function toggleComments(){
     setShowComments(prev => !prev);
   }
-  function toggleLikeThePost(){
-    console.log("Toggle like for post with user:", user);
+
+  useEffect(() => {
+    const fetchLikes = async () => {
+      try {
+        const res = await fetch(`http://localhost:3000/post_likes/${note.id}`);
+        const data = await res.json();
+        setPostLikes(data.likes);
+        
+      } catch (e) {
+        setLikesError(e.message); // Corrected from e.error to e.message
+      }
+    };
+
+    const checkLikeStatus = async () => {
+        if (user) {
+            try {
+                const response = await fetch(`http://localhost:3000/post_likes/status/${note.id}`);
+                if (response.ok) {
+                    const data = await response.json();
+                    setIsPostLiked(data.isLiked);
+                } else {
+                    setIsPostLiked(false); // Default to false if status can't be fetched
+                }
+            } catch (error) {
+                console.error("Failed to fetch like status:", error);
+                setIsPostLiked(false); // Ensure default state in case of error
+            }
+        } else {
+            setIsPostLiked(false); // If no user, default to not liked
+        }
+    };
+
+
+    fetchLikes();
+    checkLikeStatus();
+  }, []); // Depend on note.id and user to refetch when the post changes or user logs in/out
+
+  const toggleLikeThePost = async () => {
     if (user != null) {
-      // TODO zrobić wysłanie polubienia do bazy
-      
-      setIsPostLiked(prev => !prev);
+      try {
+        await fetch(`http://localhost:3000/post_likes/${note.id}`, {
+          method: "POST",
+          credentials: "include",
+        });
+        // Optimistically update the like count and status
+        setPostLikes(prevLikes => isPostLiked ? prevLikes - 1 : prevLikes + 1);
+        setIsPostLiked(prev => !prev);
+      } catch (error) {
+        setLikesError(error.message);
+        // Optionally revert the optimistic update in case of error
+        // setPostLikes(prevLikes => isPostLiked ? prevLikes + 1 : prevLikes - 1);
+        // setIsPostLiked(prev => !prev);
+      }
     }
-  }
+  };
 
   useEffect(() => {
       (async () => {
