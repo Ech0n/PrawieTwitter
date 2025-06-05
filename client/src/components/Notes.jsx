@@ -7,7 +7,7 @@ import useUsers from "../hooks/useUsers.js"; // Add this import
 
 
 export function Note({ note }) {
-  console.log("Rendering Note component with note:", note);
+  // console.log("Rendering Note component with note:", note);
   const [showComments, setShowComments] = useState(false);
   const [postLikes, setPostLikes] = useState(0);
   const [likesError, setLikesError] = useState("");
@@ -229,22 +229,22 @@ export function Note({ note }) {
     };
 
     const checkLikeStatus = async () => {
-        if (user) {
-            try {
-                const response = await fetch(`http://localhost:3000/post_likes/status/${note.id}`);
-                if (response.ok) {
-                    const data = await response.json();
-                    setIsPostLiked(data.isLiked);
-                } else {
-                    setIsPostLiked(false); // Default to false if status can't be fetched
-                }
-            } catch (error) {
-                console.error("Failed to fetch like status:", error);
-                setIsPostLiked(false); // Ensure default state in case of error
+        // if (user) {
+        try {
+            const response = await fetch(`http://localhost:3000/post_likes/status/${note.id}`, {credentials: "include"});
+            if (response.ok) {
+                const data = await response.json();
+                setIsPostLiked(data.isLiked);
+            } else {
+                setIsPostLiked(false); // Default to false if status can't be fetched
             }
-        } else {
-            setIsPostLiked(false); // If no user, default to not liked
+        } catch (error) {
+            console.error("Failed to fetch like status:", error);
+            setIsPostLiked(false); // Ensure default state in case of error
         }
+        // } else {
+        //     setIsPostLiked(false); // If no user, default to not liked
+        // }
     };
 
 

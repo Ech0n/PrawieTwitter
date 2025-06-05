@@ -16,6 +16,38 @@ const getPostLikes = async (req, res) => {
     }
 };
 
+const getPostLikesOfUser = async (req, res) => {
+    try {
+        if (!req.user) {
+            return res.status(200).json({ isLiked: false});
+        }
+
+        const postId = req.params.postID;
+        const userId = req.user.id;
+
+        if (!postId) {
+            return res.status(400).json({ error: "Bad Request: Post ID is missing." });
+        }
+        const existingLike = await db.PostLikes.findOne({
+            where: {
+                post_id: postId,
+                user_id: userId,
+            }
+        });
+
+        const hasLiked = !!existingLike;
+
+        if (hasLiked) {
+            return res.status(200).json({ isLiked: true });
+        } else {
+            return res.status(200).json({ isLiked: false});
+        }
+
+    }catch (error) {
+        return res.status(500).json({ error: error.message });
+    }
+}
+
 // jesli post nie ma likea to dodaje, a jak ma to go usuwa
 // dodatkowo aktualizuje liczbę polubień w tabeli Post dla posta
 const likeUnlikePost = async (req, res) => {
@@ -47,4 +79,4 @@ const likeUnlikePost = async (req, res) => {
     }
 }
 
-module.exports = {getPostLikes, likeUnlikePost };
+module.exports = {getPostLikes, likeUnlikePost, getPostLikesOfUser };
