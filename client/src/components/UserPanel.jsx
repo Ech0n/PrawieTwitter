@@ -3,19 +3,21 @@ import { useParams } from "react-router-dom";
 import useUsers from "../hooks/useUsers";
 import { useCurrentUser } from "../hooks/useCurrentUser";
 import usePosts from "../hooks/usePosts";
+import { Notes } from "./Notes";
 
 export default function UserPanel() {
   const { id } = useParams();
-  const { getUser } = useUsers();
+  const { getUser, getUserFollowers, getUserFollowing} = useUsers();
   const [user, setUser] = useState(null);
   const [loggedUser, setLoggedUser] = useState(null);
   const { getUserData, getFollowing, follow, unfollow } = useCurrentUser();
-  const {getPostsByUser} = usePosts();
+  const { getPostsByUser } = usePosts();
   const [followMessage, setFollowMessage] = useState("");
   const [isFollowed, setIsFollowed] = useState(false);
   const [error, setError] = useState(null);
   const [followCount, setFollowCount] = useState(0);
-  const [posts, setPosts] = useState();
+  const [followingCount, setFollowingCount] = useState(0);
+  const [posts, setPosts] = useState([]);
 
   useEffect(() => {
     getUser(id).then((res) => {
@@ -26,18 +28,18 @@ export default function UserPanel() {
   useEffect(() => {
     getUserData().then((res) => {
       setLoggedUser(res);
-      getFollowing(res.id).then((following) =>{
-        setFollowCount(following.length);
-        if(following.includes(user?.username)) setIsFollowed(true);
+      getFollowing(res.id).then((following) => {
+        if (following.includes(user?.username)) setIsFollowed(true);
         else setIsFollowed(false);
-      }
-      );
-      getPostsByUser(id).then((res)=>{
-        setPosts(res);
-        console.log(res);
-      })
+      });
     });
 
+    getUserFollowers(id).then((number)=>setFollowCount(number));
+    getUserFollowing(id).then((number)=>setFollowingCount(number));
+
+    getPostsByUser(id).then((post_list) => {
+      setPosts(post_list);
+    });
   }, [user]);
 
   return (
@@ -61,15 +63,15 @@ export default function UserPanel() {
       >
         <div>
           <p>Followers</p>
-          <p>{followCount }</p>
+          <p>{followCount}</p>
         </div>
         <div>
           <p>Following</p>
-          <p>{user?.following_count}</p>
+          <p>{followingCount}</p>
         </div>
         <div>
           <p>Posts</p>
-          <p>{user?.notes_count}</p>
+          <p>{posts.length}</p>
         </div>
       </div>
       {loggedUser?.id != id ? (
@@ -82,31 +84,34 @@ export default function UserPanel() {
             onClick={() => {
               if (!loggedUser) {
                 setFollowMessage("You have to sign in to follow!");
-              } else if(!isFollowed) {
-
-                follow(id).then(()=>setIsFollowed(true)).catch((err) => {
-                  setError(err);
-                  console.log(err);
-                  
-                });
-              }
-              else{
-                unfollow(id).then(()=>setIsFollowed(false)).catch((err)=>{
-                  setError(err);
-                  console.log(err);
-                  setIsFollowed(false);
-                })
+              } else if (!isFollowed) {
+                follow(id)
+                  .then(() => setIsFollowed(true))
+                  .catch((err) => {
+                    setError(err);
+                    console.log(err);
+                  });
+              } else {
+                unfollow(id)
+                  .then(() => setIsFollowed(false))
+                  .catch((err) => {
+                    setError(err);
+                    console.log(err);
+                    setIsFollowed(false);
+                  });
               }
             }}
           >
             {isFollowed ? "Unfollow" : "Follow"}
           </button>
-          <p style={{ color: "#d99b9a", padding: "1rem" }}>{error?.message || followMessage}</p>
-
+          <p style={{ color: "#d99b9a", padding: "1rem" }}>
+            {error?.message || followMessage}
+          </p>
         </div>
       ) : (
         ""
       )}
+      <Notes notes={posts} />
     </div>
   );
 }

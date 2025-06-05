@@ -24,6 +24,32 @@ export default function useUsers() {
 
     return data;
   };
+  
+  const getUserFollowers = async (id)=>{
+    let res = await fetch(`http://localhost:3000/followers/${id}`, {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+      },
+    });
+
+    let data = await res.json();
+ 
+    return data.followers.length;
+  }
+
+  const getUserFollowing = async (id) => {
+    let res = await fetch(`http://localhost:3000/followers/following/${id}`, {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+      },
+    });
+
+    let data = await res.json();
+ 
+    return data.following.length;
+  }
 
  const getTopUsers = (username) => {
   if (!users || !Array.isArray(users)) return [];
@@ -56,5 +82,5 @@ export default function useUsers() {
 };
 
 
-  return { users, getTopUsers, getUser };
+  return { users, getTopUsers, getUser, getUserFollowers, getUserFollowing };
 }

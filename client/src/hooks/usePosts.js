@@ -18,11 +18,11 @@ export default function usePosts() {
   };
 
   const getPostsByUser = async (id) => {
-    const response = await fetch(`http://localhost:3000/posts?owner_id=${id}`, {
+    
+
+    const response = await fetch(`http://localhost:3000/posts/owner/${id}`, {
       method: "GET",
-      body: JSON.stringify({
-        owner_id : id
-      }),
+  
       headers: {
         "Content-Type": "application/json",
       },
@@ -32,7 +32,9 @@ export default function usePosts() {
     const data = await response.json();
     if (!response.ok) throw new Error(data.error || "Could not load posts");
     else {
-      return data.posts;
+
+      return data;
+      
     }
   };
 
