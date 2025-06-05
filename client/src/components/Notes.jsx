@@ -7,6 +7,7 @@ import useUsers from "../hooks/useUsers.js"; // Add this import
 
 
 export function Note({ note }) {
+  console.log("Rendering Note component with note:", note);
   const [showComments, setShowComments] = useState(false);
   const [postLikes, setPostLikes] = useState(0);
   const [likesError, setLikesError] = useState("");
@@ -291,6 +292,15 @@ export function Note({ note }) {
         <span className="note-metadata">{note.createdAt.split("T")[0]}</span>
       </div>
       <div className="note-content">{note.content}</div>
+      {note.photo_path && (
+        /* <img className="note-image" src={note.photo_path}/> */
+        <img
+          className="note-image"
+          style={{ maxWidth: "800px", marginTop: "1rem" }}
+          src="https://images.unsplash.com/photo-1501785888041-af3ef285b470?auto=format&fit=crop&w=1350&q=80"
+          alt="Post Image"
+        />
+      )}
       <div className="note-bottom-part">
         <button onClick={toggleComments} className="post-icons"><img className="post-icons" src={CommentIcon} alt="comment icon"/></button>
         <span>{commentsCount===-1 ?"Unknown" : commentsCount}</span>
