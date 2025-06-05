@@ -23,7 +23,8 @@
   justify-content: center;
 }
 #sidebar {
-  padding: 2rem;
+  padding: 1rem;
+  padding-bottom: 0.5rem;
   border-style: solid;
   height: max-content;
   width: 10vw;
@@ -153,12 +154,6 @@
   padding: 10px;
   margin: 5px;
   border-style: solid;
-}
-
-
-#logout-button:hover{
-  opacity: 0.7;
-  cursor:pointer;
 }
 
 #sign-up-button>a, #sign-in-button>a{

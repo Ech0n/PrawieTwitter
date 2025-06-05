@@ -1,12 +1,10 @@
 import React, { useEffect, useState } from "react";
-import { useLogin } from "../hooks/useLogin";
 import { useCurrentUser } from "../hooks/useCurrentUser";
 
 function Details() {
   const { getUserData, getFollowing } = useCurrentUser();
   const [user, setUser] = useState();
   const [followers, setFollowers] = useState();
-  const { logout } = useLogin();
   const [error, setError] = useState(false);
 
   const buttonStyle = {
@@ -68,21 +66,6 @@ function Details() {
   return (
     <div id="details-box">
       <h2>User details</h2>
-      {user ? (
-        <button
-          id="logout-button"
-          onClick={() => {
-            logout().then(() => {
-              window.location.reload();
-            });
-          }}
-          style={{ ...buttonStyle }}
-        >
-          Logout
-        </button>
-      ) : (
-        ""
-      )}
       <div id="basic-details-box">
         <h3>Basic</h3>
         <ul>
